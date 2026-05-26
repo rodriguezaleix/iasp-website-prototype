@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IASP — Global Network of Innovation</title>
+    <meta name="description" content="The global network of science parks, innovation hubs and areas of innovation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+    /* ────────────────────────────────────────────
+       TOKENS
+    ──────────────────────────────────────────── */
+    :root {
+        --ink:     #f4f3ef;
+        --off:     #04070b;
+        --cyan:    #0084a4;
+        --lime:    #82b941;
+        --amber:   #e87d1e;
+        --teal:    #007a8c;
+        --muted:   rgba(4,7,11,0.55);
+        --border:  rgba(4,7,11,0.12);
+        --glass:   rgba(4,7,11,0.04);
+        --easing:  cubic-bezier(0.22, 1, 0.36, 1);
+        --font-h:  'Outfit', sans-serif;
+        --font-b:  'Space Grotesk', sans-serif;
+    }
+
+    /* ────────────────────────────────────────────
+       BASE
+    ──────────────────────────────────────────── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+        background: var(--ink);
+        color: var(--off);
+        font-family: var(--font-b);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; max-width:100%; }
+
+    /* ────────────────────────────────────────────
+       GRAIN (subtle, static-like premium feel)
+    ──────────────────────────────────────────── */
+    body::after {
+        content:'';
+        position:fixed; inset:0; z-index:9000; pointer-events:none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        opacity: 0.028;
+        animation: grain 0.8s steps(3) infinite;
+    }
+    @keyframes grain { 0%{transform:translate(0,0)} 33%{transform:translate(-3px,2px)} 66%{transform:translate(2px,-3px)} 100%{transform:translate(0,0)} }
+
+    /* ────────────────────────────────────────────
+       HEADER
+    ──────────────────────────────────────────── */
+    .site-header {
+        position: fixed; top:0; left:0; width:100%; z-index:500;
+        transition: background 0.5s, border-color 0.5s;
+    }
+    .site-header.scrolled {
+        background: rgba(244,243,239,0.92);
+        backdrop-filter: blur(24px);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .header-strip {
+        padding: 12px 6%;
+        display: flex; justify-content:space-between; align-items:center;
+        border-bottom: 1px solid var(--border);
+        font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+    }
+    .header-strip-name { color: var(--off); font-weight:800; }
+    .header-strip-right { display:flex; gap:24px; align-items:center; }
+    .header-strip-right a {
+        color: var(--off); font-size:18px;
+        transition: color 0.25s;
+    }
+    .header-strip-right a:hover { color: var(--cyan); }
+    .pill-btn {
+        font-size:11px !important; font-weight:800; letter-spacing:1px;
+        display:flex; align-items:center; gap:6px;
+        color: var(--off) !important;
+        border: 1px solid rgba(4,7,11,0.3);
+        padding: 6px 16px; border-radius:99px;
+        transition: all 0.3s !important;
+    }
+    .pill-btn:hover { background:var(--off); color:var(--ink) !important; border-color:var(--off); }
+
+    .header-nav {
+        display:flex; justify-content:space-between; align-items:center;
+        padding: 18px 6%;
+    }
+    .header-logo img { height:42px; }
+
+    .nav-menu { display:flex; gap:38px; align-items:center; }
+    .nav-link {
+        font-family:var(--font-h); font-weight:800; font-size:12.5px;
+        text-transform:uppercase; letter-spacing:1.5px;
+        color: var(--off);
+        position:relative; padding-bottom:2px;
+        transition: color 0.3s;
+    }
+    .nav-link::after {
+        content:''; position:absolute; bottom:0; left:0;
+        height:1px; width:0%;
+        background: linear-gradient(90deg, var(--cyan), var(--lime));
+        transition: width 0.4s var(--easing);
+    }
+    .nav-link:hover { color: var(--off); }
+    .nav-link:hover::after { width:100%; }
+
+    .nav-item-has-dropdown { position:relative; display:inline-block; perspective:1000px; }
+    .nav-dropdown {
+        position:absolute; top:calc(100% + 5px); left:50%; transform:translateX(-50%) rotateX(-15deg);
+        transform-origin: top center;
+        background: rgba(255,255,255,0.7); backdrop-filter: blur(30px) saturate(1.5);
+        border: 1px solid rgba(255,255,255,0.9); border-radius: 20px;
+        min-width: 260px; box-shadow: 0 30px 60px rgba(0,134,154,0.1), 0 0 0 1px rgba(255,255,255,0.5) inset;
+        opacity:0; visibility:hidden; pointer-events:none;
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display:flex; flex-direction:column; overflow:hidden;
+        z-index: 999; padding: 12px;
+    }
+    /* Invisible bridge to prevent losing hover */
+    .nav-item-has-dropdown::after { content:''; position:absolute; top:100%; left:0; width:100%; height:30px; }
+    
+    .nav-item-has-dropdown:hover .nav-dropdown { opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) rotateX(0deg); }
+    .nav-dropdown a {
+        padding: 14px 20px; color: var(--off);
+        font-family: var(--font-h); font-size:14.5px; font-weight:700;
+        transition: all 0.3s ease; position:relative;
+        border-radius: 12px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .nav-dropdown a::after {
+        content: '\2192'; font-family: sans-serif; font-size:16px; opacity:0; transform:translateX(-10px); transition:all 0.3s ease; color:var(--cyan);
+    }
+    .nav-dropdown a:hover { color: var(--ink); background: var(--off); }
+    .nav-dropdown a:hover::after { opacity:1; transform:translateX(0); color:var(--lime); }
+
+    .nav-cta {
+        font-family:var(--font-h) !important;
+        font-weight:800 !important; font-size:12px !important;
+        letter-spacing:1.5px !important; text-transform:uppercase;
+        display:flex; align-items:center; gap:8px;
+        background: var(--cyan);
+        color: #ffffff !important;
+        padding: 11px 26px; border-radius:99px;
+        transition: all 0.35s var(--easing) !important;
+    }
+    .nav-cta::after { display:none !important; }
+    .nav-cta:hover {
+        background: var(--off); color:var(--ink) !important;
+        transform: translateY(-2px);
+    }
+
+    /* ────────────────────────────────────────────
+       HERO SLIDER
+    ──────────────────────────────────────────── */
+    .hero { position:relative; height:100svh; min-height:600px; overflow:hidden; }
+
+    /* slides stacked */
+    .slide { position:absolute; inset:0; display:flex; align-items:flex-end; overflow:hidden; }
+    .slide { opacity:0; visibility:hidden; transition:opacity 0.9s ease; }
+    .slide.is-active { opacity:1; visibility:visible; z-index:2; }
+
+    /* bg image */
+    .slide-img {
+        position:absolute; inset:-8%;
+        background-size:cover; background-position:center;
+        filter:brightness(0.9) saturate(0.85);
+        will-change:transform;
+    }
+    .slide.is-active .slide-img { animation: slow-zoom 14s linear forwards; }
+    @keyframes slow-zoom { from{transform:scale(1)} to{transform:scale(1.08)} }
+
+    /* gradient masks */
+    .slide-mask {
+        position:absolute; inset:0;
+        background:
+            linear-gradient(to bottom, rgba(244,243,239,0.95) 0%, rgba(244,243,239,0.4) 15%, transparent 30%),
+            linear-gradient(to top,    rgba(244,243,239,1) 0%,  rgba(244,243,239,0.6) 40%, transparent 100%),
+            linear-gradient(to right,  rgba(244,243,239,0.8)  0%,  transparent 60%);
+    }
+
+    /* content */
+    .slide-inner {
+        position:relative; z-index:3;
+        width:100%; padding: 140px 6% 7%;
+        display:grid;
+        grid-template-rows: auto auto;
+        gap: 28px;
+        height: 100%;
+        align-content: end;
+    }
+
+    .slide-kicker {
+        display:inline-flex; align-items:center; gap:12px;
+        font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+        color: var(--cyan);
+        opacity:0; transform:translateY(20px);
+        transition: opacity 0.7s var(--easing), transform 0.7s var(--easing);
+    }
+    .slide-kicker::before { content:''; width:28px; height:1px; background:var(--cyan); flex-shrink:0; }
+    .slide.is-active .slide-kicker { opacity:1; transform:translateY(0); transition-delay:0.15s; }
+
+    /* headline: each word on its own line, clipped reveal */
+    .slide-headline {
+        overflow:hidden;
+        display:flex; flex-direction:column; gap:0;
+    }
+    .hline {
+        overflow:hidden; display:block; line-height:1.05;
+    }
+    .hline-inner {
+        display:block;
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: clamp(2.6rem, 4.5vw, 5rem);
+        text-transform: capitalize;
+        letter-spacing: -1px;
+        color: var(--off);
+        transform: translateY(115%);
+        transition: transform 0.85s var(--easing);
+    }
+    .slide.is-active .hline:nth-child(1) .hline-inner { transform:translateY(0); transition-delay:0.2s; }
+    .slide.is-active .hline:nth-child(2) .hline-inner { transform:translateY(0); transition-delay:0.32s; }
+    .slide.is-active .hline:nth-child(3) .hline-inner { transform:translateY(0); transition-delay:0.44s; }
+
+    .slide-sub {
+        font-size:1.1rem; font-weight:500; color:rgba(4,7,11,0.7);
+        max-width:520px; line-height:1.6; margin-bottom:4px;
+        opacity:0; transform:translateY(18px);
+        transition: opacity 0.7s var(--easing), transform 0.7s var(--easing);
+    }
+    .slide.is-active .slide-sub { opacity:1; transform:translateY(0); transition-delay:0.52s; }
+
+    .slide-foot {
+        display:flex; align-items:center; gap:32px; flex-wrap:wrap;
+        opacity:0; transform:translateY(24px);
+        transition: opacity 0.7s var(--easing), transform 0.7s var(--easing);
+    }
+    .slide.is-active .slide-foot { opacity:1; transform:translateY(0); transition-delay:0.6s; }
+
+    /* CTA button */
+    .btn-cta {
+        display:inline-flex; align-items:center; gap:14px;
+        font-family:var(--font-h); font-weight:800; font-size:13px;
+        text-transform:uppercase; letter-spacing:1.5px;
+        background: var(--lime); color: #ffffff;
+        padding: 17px 38px; border-radius:99px;
+        border: 2px solid var(--lime);
+        transition: all 0.4s var(--easing);
+        flex-shrink:0;
+    }
+    .btn-cta:hover { background:transparent; color:var(--lime); transform:translateY(-4px); box-shadow:0 20px 50px rgba(130,185,65,0.35); }
+    .btn-cta .icon { transition: transform 0.4s var(--easing); }
+    .btn-cta:hover .icon { transform:translateX(5px); }
+
+    .slide-index {
+        font-family:var(--font-h); font-weight:900; font-size:11px; letter-spacing:3px;
+        color: rgba(4,7,11,0.7);
+    }
+    .slide-index strong { font-size:28px; color:var(--off); vertical-align:middle; }
+
+    /* caption */
+    .slide-caption { position:absolute; right:6%; bottom:7%; z-index:5; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(4,7,11,0.6); font-style:italic; font-weight:700; }
+
+    /* slider controls */
+    .slider-dots { position:absolute; bottom:7%; left:6%; z-index:5; display:flex; flex-direction:column; gap:10px; }
+    .sdot {
+        width:4px; height:4px; border-radius:99px; background:rgba(4,7,11,0.4); cursor:pointer;
+        transition: all 0.4s var(--easing);
+    }
+    .sdot.is-active { height:28px; background:var(--cyan); box-shadow:0 0 12px var(--cyan); }
+
+    .slider-arrows { position:absolute; bottom:7%; right:6%; z-index:5; display:flex; gap:10px; }
+    .sarrow {
+        width:50px; height:50px; border-radius:50%;
+        border:1px solid rgba(4,7,11,0.3); background:rgba(244,243,239,0.3); backdrop-filter:blur(12px);
+        color:var(--off); font-size:18px; display:flex; align-items:center; justify-content:center;
+        cursor:pointer; transition:all 0.3s;
+    }
+    .sarrow:hover { background:var(--cyan); color:var(--ink); border-color:var(--cyan); }
+
+    /* ────────────────────────────────────────────
+       STATS ROW
+    ──────────────────────────────────────────── */
+    .stats-row {
+        display:grid; grid-template-columns:repeat(4,1fr);
+        border-top:1px solid var(--border);
+    }
+    .stat {
+        padding:44px 6%;
+        border-right:1px solid var(--border);
+        position:relative; overflow:hidden;
+        transition: background 0.35s;
+    }
+    .stat:last-child { border-right:none; }
+    .stat::before { content:''; position:absolute; bottom:0; left:0; width:100%; height:2px; background:var(--cyan); transform:scaleX(0); transform-origin:left; transition:transform 0.5s var(--easing); }
+    .stat:hover { background:var(--glass); }
+    .stat:hover::before { transform:scaleX(1); }
+    .stat-n {
+        font-family:var(--font-h); font-size:clamp(2.8rem,4.5vw,4.5rem);
+        font-weight:900; line-height:1;
+        color:var(--off);
+    }
+    .stat-n sup { font-size:0.4em; color:var(--cyan); vertical-align:super; }
+    .stat-l { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:8px; }
+
+    /* ────────────────────────────────────────────
+       FEATURE CARDS  (sticky stack)
+    ──────────────────────────────────────────── */
+    .cards-section { padding:140px 0 120px; }
+    .cards-inner { max-width:1320px; margin:0 auto; padding:0 6%; }
+
+    .eyebrow {
+        font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--muted);
+        display:flex; align-items:center; gap:14px; margin-bottom:80px;
+    }
+    .eyebrow::before { content:''; width:36px; height:1px; background:var(--border); }
+
+    .feat-card {
+        position:sticky; border-radius:28px; overflow:hidden;
+        height:520px; margin-bottom:64px;
+        transition:filter 0.3s, transform 0.3s;
+    }
+    .feat-card-1 { top:112px; z-index:10; }
+    .feat-card-2 { top:148px; z-index:11; }
+    .feat-card-3 { top:184px; z-index:12; }
+
+    .feat-bg {
+        position:absolute; inset:0;
+        background-size:cover; background-position:center;
+        transition:transform 0.9s var(--easing);
+    }
+    .feat-card:hover .feat-bg { transform:scale(1.04); }
+
+    .feat-grad { position:absolute; inset:0; }
+    .g-green  { background:linear-gradient(160deg, rgba(100,200,0,0.1) 0%, rgba(244,243,239,0.95) 85%); }
+    .g-amber  { background:linear-gradient(160deg, rgba(255,100,0,0.12) 0%, rgba(244,243,239,0.95) 85%); }
+    .g-blue   { background:linear-gradient(160deg, rgba(0,120,180,0.15) 0%, rgba(244,243,239,0.95) 85%); }
+
+    .feat-num {
+        position:absolute; top:32px; right:48px;
+        font-family:var(--font-h); font-size:9rem; font-weight:900;
+        color:transparent; line-height:1; letter-spacing:-4px; user-select:none;
+    }
+    .feat-num-1 { -webkit-text-stroke:1px rgba(141,179,0,0.25); }
+    .feat-num-2 { -webkit-text-stroke:1px rgba(230,98,0,0.2); }
+    .feat-num-3 { -webkit-text-stroke:1px rgba(0,134,154,0.2); }
+
+    .feat-body {
+        position:absolute; inset:0; z-index:2;
+        display:flex; flex-direction:column; justify-content:flex-end;
+        padding:52px 60px;
+    }
+    .feat-tag { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; margin-bottom:18px; }
+    .tag-green  { color:var(--lime); }
+    .tag-amber  { color:var(--amber); }
+    .tag-blue   { color:var(--cyan); }
+
+    .feat-title {
+        font-family:var(--font-h);
+        font-size:clamp(2.8rem,4.8vw,5rem);
+        font-weight:900; line-height:0.95;
+        text-transform:uppercase; letter-spacing:-1.5px;
+        margin-bottom:22px;
+    }
+    .feat-desc { font-size:1.05rem; color:rgba(4,7,11,0.65); max-width:460px; line-height:1.65; font-weight:500; }
+
+    .feat-arrow {
+        position:absolute; bottom:52px; right:52px; z-index:2;
+        width:60px; height:60px; border-radius:50%;
+        border:1px solid var(--border); background:var(--glass); backdrop-filter:blur(12px);
+        display:flex; align-items:center; justify-content:center; font-size:20px;
+        transition:all 0.4s var(--easing); color:var(--off);
+    }
+    .feat-card:hover .feat-arrow { transform:rotate(45deg); background:var(--lime); color:var(--ink); border-color:var(--lime); }
+
+    /* ────────────────────────────────────────────
+       CONFERENCE SECTION
+    ──────────────────────────────────────────── */
+    .conf-section { position:relative; height:90vh; overflow:hidden; display:flex; align-items:flex-end; }
+    .conf-bg {
+        position:absolute; inset:0;
+        background:url('cannes.jpg') center/cover;
+        filter:brightness(0.45) saturate(0.7);
+        transform:scale(1.04);
+        transition:transform 8s linear;
+    }
+    .conf-section:hover .conf-bg { transform:scale(1.0); }
+    /* Full bleed fade: light top → photo → light bottom */
+    .conf-vignette {
+        position:absolute; inset:0;
+        background:
+            linear-gradient(to bottom, rgba(244,243,239,1) 0%, transparent 25%),
+            linear-gradient(to top,   rgba(244,243,239,1) 0%, transparent 35%);
+    }
+
+    .conf-inner {
+        position:relative; z-index:3; width:100%;
+        display:flex; justify-content:space-between; align-items:flex-end;
+        padding: 0 6% 8%; gap:48px;
+    }
+    .conf-text {}
+    .conf-kicker { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--amber); margin-bottom:22px; display:flex; align-items:center; gap:10px; }
+    .conf-kicker::before { content:''; width:26px; height:1px; background:var(--amber); }
+    .conf-title {
+        font-family:var(--font-h);
+        font-size:clamp(2.8rem,5.5vw,6rem);
+        font-weight:800; text-transform:uppercase;
+        line-height:1.05; letter-spacing:-1.5px;
+        color: #ffffff;
+    }
+
+    .btn-ghost {
+        display:inline-flex; align-items:center; gap:12px;
+        font-family:var(--font-h); font-weight:800; font-size:12.5px;
+        text-transform:uppercase; letter-spacing:1.5px;
+        padding:16px 32px; border-radius:99px;
+        background: var(--amber); border: 2px solid var(--amber);
+        color:#ffffff; white-space:nowrap;
+        backdrop-filter:blur(12px);
+        transition:all 0.4s var(--easing);
+        flex-shrink:0; align-self:flex-end; margin-bottom:10px;
+    }
+    .btn-ghost:hover { background:transparent; color:var(--amber); transform:translateY(-4px); box-shadow:0 24px 50px rgba(232,125,30,0.35); }
+
+    /* ────────────────────────────────────────────
+       NEWS  (editorial list)
+    ──────────────────────────────────────────── */
+    .news-section { padding:140px 6%; max-width:1320px; margin:0 auto; }
+    .news-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:72px; }
+    .news-heading {
+        font-family:var(--font-h); font-size:clamp(2.5rem,4.5vw,5rem);
+        font-weight:800; text-transform:uppercase; letter-spacing:-1px; line-height:1.05;
+        color: var(--off);
+    }
+
+    .news-row {
+        display:grid; grid-template-columns:160px 1fr 150px;
+        align-items:center; gap:32px;
+        padding:36px 0;
+        border-top:1px solid var(--border);
+        position:relative; overflow:hidden;
+        cursor:pointer;
+        text-decoration:none; color:var(--off); display:grid;
+    }
+    .news-row:last-child { border-bottom:1px solid var(--border); }
+    .news-row::after { content:''; position:absolute; inset:0 -2%; background:var(--glass); transform:scaleX(0); transform-origin:left; transition:transform 0.55s var(--easing); pointer-events:none; }
+    .news-row:hover::after { transform:scaleX(1); }
+
+    .news-date { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); position:relative; z-index:1; }
+    .news-title-text {
+        font-family:var(--font-h); font-size:clamp(1.3rem,2.2vw,2rem); font-weight:700; line-height:1.15;
+        position:relative; z-index:1; transition:color 0.3s;
+    }
+    .news-row:hover .news-title-text { color:var(--cyan); }
+
+    .news-thumb {
+        width:150px; height:90px; border-radius:12px; overflow:hidden;
+        transform:rotate(2deg) scale(0.85); opacity:0;
+        transition:transform 0.5s var(--easing), opacity 0.4s;
+        position:relative; z-index:1;
+    }
+    .news-row:hover .news-thumb { transform:rotate(0deg) scale(1); opacity:1; }
+    .news-thumb img { width:100%; height:100%; object-fit:cover; }
+
+    /* ────────────────────────────────────────────
+       MEMBERS CAROUSEL
+    ──────────────────────────────────────────── */
+    .members-band { padding:72px 0; background:#ebeae5; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
+    .members-label { text-align:center; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--cyan); margin-bottom:44px; }
+
+    .carousel-wrap { position:relative; overflow:hidden; }
+    .carousel-wrap::before,
+    .carousel-wrap::after { content:''; position:absolute; top:0; height:100%; width:160px; z-index:2; pointer-events:none; }
+    .carousel-wrap::before { left:0;  background:linear-gradient(90deg,  #ebeae5, transparent); }
+    .carousel-wrap::after  { right:0; background:linear-gradient(-90deg, #ebeae5, transparent); }
+
+    .carousel-track { display:flex; gap:28px; width:max-content; align-items:center; animation:scroll-logos 30s linear infinite; }
+    .carousel-track:hover { animation-play-state:paused; }
+    @keyframes scroll-logos { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    .logo-tile {
+        flex-shrink:0; width:200px; height:96px;
+        background:#fff; border-radius:14px; padding:16px 20px;
+        display:flex; align-items:center; justify-content:center;
+        transition:all 0.4s var(--easing);
+    }
+    .logo-tile:hover { transform:translateY(-8px) scale(1.04); }
+    .logo-tile img { max-width:100%; max-height:52px; object-fit:contain; }
+
+    /* ────────────────────────────────────────────
+       FOOTER
+    ──────────────────────────────────────────── */
+    .site-footer { padding:100px 6% 52px; }
+    .footer-grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:64px; }
+    .footer-logo { height:52px; margin-bottom:22px; }
+    .footer-desc { color:var(--muted); font-size:15px; line-height:1.75; max-width:260px; }
+    .footer-col h6 { font-family:var(--font-h); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:28px; }
+    .footer-col a, .footer-col p { display:block; color:var(--muted); font-size:15px; margin-bottom:13px; transition:color 0.3s; }
+    .footer-col a:hover { color:var(--off); }
+
+    .footer-bar {
+        max-width:1320px; margin:60px auto 0; padding-top:28px;
+        border-top:1px solid var(--border);
+        display:flex; justify-content:space-between;
+        font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(4,7,11,0.4);
+    }
+
+    /* ────────────────────────────────────────────
+       SCROLL REVEAL
+    ──────────────────────────────────────────── */
+    [data-reveal] {
+        opacity:0; transform:translateY(44px);
+        transition:opacity 0.9s var(--easing), transform 0.9s var(--easing);
+    }
+    [data-reveal].is-visible { opacity:1; transform:translateY(0); }
+    [data-reveal="1"] { transition-delay:0.08s; }
+    [data-reveal="2"] { transition-delay:0.16s; }
+    [data-reveal="3"] { transition-delay:0.24s; }
+
+    /* ────────────────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────────────────── */
+    @media (max-width:1100px) {
+        .stats-row { grid-template-columns:1fr 1fr; }
+        .stat:nth-child(2) { border-right:none; }
+        .stat:nth-child(1),
+        .stat:nth-child(2) { border-bottom:1px solid var(--border); }
+        .conf-inner { flex-direction:column; align-items:flex-start; }
+        .news-row { grid-template-columns:120px 1fr; }
+        .news-thumb { display:none; }
+        .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:768px) {
+        .hline-inner { font-size:3.6rem; letter-spacing:-1px; white-space:normal; }
+        .stats-row { grid-template-columns:1fr; }
+        .stat { border-right:none; border-bottom:1px solid var(--border); }
+        .feat-body { padding:36px; }
+        .news-section { padding:100px 5%; }
+        .news-row { grid-template-columns:1fr; }
+        .news-date { display:none; }
+        .footer-grid { grid-template-columns:1fr; gap:40px; }
+        .nav-menu .nav-link { display:none; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════ -->
+<header class="site-header" id="site-header">
+    <div class="header-strip">
+        <span class="header-strip-name">International Association of Science Parks</span>
+        <div class="header-strip-right">
+            <a href="#" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+            <a href="#" aria-label="Twitter"><i class="ph ph-twitter-logo"></i></a>
+            <a href="#" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
+            <a href="#" class="pill-btn"><i class="ph ph-magnifying-glass"></i>&nbsp;Search</a>
+            <a href="#" class="pill-btn"><i class="ph ph-sign-in"></i>&nbsp;Login</a>
+        </div>
+    </div>
+    <nav class="header-nav">
+        <a href="index.html" class="header-logo"><img src="logo.png" alt="IASP"></a>
+        <div class="nav-menu">
+            <a href="#" class="nav-link">Our Members</a>
+            <a href="#" class="nav-link">Our Industry</a>
+            <div class="nav-item-has-dropdown">
+                <a href="#" class="nav-link">Activities <i class="ph ph-caret-down"></i></a>
+                <div class="nav-dropdown">
+                    <a href="#">News</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="#">Events</a>
+                    <a href="#">IASP World Conference</a>
+                    <a href="#">Services</a>
+                    <a href="#">Projects</a>
+                    <a href="#">Open Opportunities</a>
+                </div>
+            </div>
+            <div class="nav-item-has-dropdown">
+                <a href="about.html" class="nav-link">About Us <i class="ph ph-caret-down"></i></a>
+                <div class="nav-dropdown">
+                    <a href="about.html">About IASP</a>
+                    <a href="#">Board of Directors</a>
+                    <a href="#">IASP Think tank</a>
+                    <a href="#">Partners</a>
+                    <a href="#">Our team</a>
+                    <a href="#">Contact us</a>
+                </div>
+            </div>
+            <a href="#" class="nav-link">Join</a>
+            <a href="#" class="nav-cta"><i class="ph ph-fingerprint" style="font-size:15px;"></i>Members Area</a>
+        </div>
+    </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     HERO SLIDER
+═══════════════════════════════════════════════ -->
+<section class="hero" id="hero" aria-label="Hero slider">
+
+    <!-- Slide 1 -->
+    <div class="slide is-active" id="s1">
+        <div class="slide-img" style="background-image:url('slider-strategic.jpg');"></div>
+        <div class="slide-mask"></div>
+        <div class="slide-inner">
+            <div class="slide-kicker">Global Network &nbsp;·&nbsp; Since 1984</div>
+            <div class="slide-headline">
+                <span class="hline"><span class="hline-inner">Innovation</span></span>
+                <span class="hline"><span class="hline-inner">Ecosystems</span></span>
+                <span class="hline"><span class="hline-inner">Worldwide</span></span>
+            </div>
+            <p class="slide-sub">The global network of science parks, innovation hubs, areas of innovation and more...</p>
+            <div class="slide-foot">
+                <a href="#" class="btn-cta">
+                    Member Directory <i class="ph ph-arrow-right icon"></i>
+                </a>
+                <span class="slide-index"><strong>01</strong> &thinsp;/&thinsp; 02</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" id="s2">
+        <div class="slide-img" style="background-image:url('conference2.jpg');"></div>
+        <div class="slide-mask"></div>
+        <div class="slide-inner">
+            <div class="slide-kicker">IASP World Conference &nbsp;·&nbsp; Nantes 2019</div>
+            <div class="slide-headline">
+                <span class="hline"><span class="hline-inner">International</span></span>
+                <span class="hline"><span class="hline-inner">Collaboration</span></span>
+                <span class="hline"><span class="hline-inner">Network</span></span>
+            </div>
+            <p class="slide-sub">The global network of science parks, innovation hubs, areas of innovation and more...</p>
+            <div class="slide-foot">
+                <a href="#" class="btn-cta">
+                    Join IASP <i class="ph ph-arrow-right icon"></i>
+                </a>
+                <span class="slide-index"><strong>02</strong> &thinsp;/&thinsp; 02</span>
+            </div>
+        </div>
+        <div class="slide-caption">IASP Nantes 2019</div>
+    </div>
+
+    <!-- Controls -->
+    <div class="slider-dots" id="slider-dots">
+        <button class="sdot is-active" data-idx="0" aria-label="Slide 1"></button>
+        <button class="sdot" data-idx="1" aria-label="Slide 2"></button>
+    </div>
+    <div class="slider-arrows">
+        <button class="sarrow" id="sl-prev" aria-label="Previous"><i class="ph ph-caret-left"></i></button>
+        <button class="sarrow" id="sl-next" aria-label="Next"><i class="ph ph-caret-right"></i></button>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     STATS
+═══════════════════════════════════════════════ -->
+<div class="stats-row">
+    <div class="stat" data-reveal="0"><div class="stat-n">400<sup>+</sup></div><div class="stat-l">Member organisations</div></div>
+    <div class="stat" data-reveal="1"><div class="stat-n">74<sup>+</sup></div><div class="stat-l">Countries represented</div></div>
+    <div class="stat" data-reveal="2"><div class="stat-n">40<sup>+</sup></div><div class="stat-l">Years of excellence</div></div>
+    <div class="stat" data-reveal="3"><div class="stat-n">100k<sup>+</sup></div><div class="stat-l">Companies hosted</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     FEATURE CARDS
+═══════════════════════════════════════════════ -->
+<section class="cards-section">
+    <div class="cards-inner">
+        <div class="eyebrow" data-reveal="0">What we offer</div>
+
+        <div class="feat-card feat-card-1" data-reveal="0">
+            <div class="feat-bg" style="background-image:url('bg-green.png');"></div>
+            <div class="feat-grad g-green"></div>
+            <div class="feat-num feat-num-1">01</div>
+            <div class="feat-body">
+                <div class="feat-tag tag-green">Best Practices</div>
+                <h2 class="feat-title">Inspiring<br>Solutions</h2>
+                <p class="feat-desc">Innovative best practices in STP, ID and AOI management to inspire others across the global network.</p>
+            </div>
+            <a href="#" class="feat-arrow" aria-label="Explore"><i class="ph ph-arrow-up-right"></i></a>
+        </div>
+
+        <div class="feat-card feat-card-2" data-reveal="0">
+            <div class="feat-bg" style="background-image:url('bg-orange.jpg');"></div>
+            <div class="feat-grad g-amber"></div>
+            <div class="feat-num feat-num-2">02</div>
+            <div class="feat-body">
+                <div class="feat-tag tag-amber">Opportunities</div>
+                <h2 class="feat-title">Open<br>Opportunities</h2>
+                <p class="feat-desc">Fast-track to information and deadlines: tenders, call for papers, competitions, projects and funding.</p>
+            </div>
+            <a href="#" class="feat-arrow" aria-label="Explore"><i class="ph ph-arrow-up-right"></i></a>
+        </div>
+
+        <div class="feat-card feat-card-3" data-reveal="0">
+            <div class="feat-bg" style="background-image:url('bg-blue.png');"></div>
+            <div class="feat-grad g-blue"></div>
+            <div class="feat-num feat-num-3">03</div>
+            <div class="feat-body">
+                <div class="feat-tag tag-blue">Milestone</div>
+                <h2 class="feat-title">IASP<br>40 Years</h2>
+                <p class="feat-desc">IASP reached the milestone of 40 years! Read notes and best wishes from colleagues across the globe.</p>
+            </div>
+            <a href="#" class="feat-arrow" aria-label="Explore"><i class="ph ph-arrow-up-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CONFERENCE
+═══════════════════════════════════════════════ -->
+<section class="conf-section" aria-label="IASP World Conference">
+    <div class="conf-bg"></div>
+    <div class="conf-vignette"></div>
+    <div class="conf-inner">
+        <div class="conf-text">
+            <div class="conf-kicker" data-reveal="0">Next World Conference</div>
+            <h2 class="conf-title" data-reveal="1">
+                43rd IASP World<br>
+                Conference on<br>
+                Science Parks
+            </h2>
+        </div>
+        <a href="#" class="btn-ghost" data-reveal="2">
+            Other IASP Events <i class="ph ph-arrow-up-right"></i>
+        </a>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     NEWS
+═══════════════════════════════════════════════ -->
+<div style="max-width:1320px; margin:0 auto; padding:140px 6% 0;">
+    <div class="news-head">
+        <h2 class="news-heading" data-reveal="0">
+            Latest News
+        </h2>
+        <a href="#" class="btn-ghost" data-reveal="1" style="margin-bottom:12px;">
+            See all news <i class="ph ph-arrow-right"></i>
+        </a>
+    </div>
+
+    <a href="#" class="news-row" data-reveal="0">
+        <span class="news-date">19 May 2026</span>
+        <span class="news-title-text">IASP to Co-Chair Global Alliance of SEZs with UNCTAD</span>
+        <div class="news-thumb"><img src="news-unctad.jpg" alt="UNCTAD"></div>
+    </a>
+    <a href="#" class="news-row" data-reveal="1">
+        <span class="news-date">06 May 2026</span>
+        <span class="news-title-text">StartSmart Investment Forum 2026 in Riyadh</span>
+        <div class="news-thumb"><img src="news-forum.jpg" alt="Forum"></div>
+    </a>
+    <a href="#" class="news-row" data-reveal="2">
+        <span class="news-date">30 April 2026</span>
+        <span class="news-title-text">Welcome to this month's new Full Members!</span>
+        <div class="news-thumb"><img src="news-map.png" alt="Map"></div>
+    </a>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     MEMBER LOGOS
+═══════════════════════════════════════════════ -->
+<section class="members-band" style="margin-top:140px;" aria-label="IASP members">
+    <p class="members-label">IASP members around the world</p>
+    <div class="carousel-wrap">
+        <div class="carousel-track">
+            <!-- Set 1 -->
+            <div class="logo-tile"><img src="logo-pita.jpg" alt="PITA"></div>
+            <div class="logo-tile"><img src="logo-gdansk.png" alt="Gdansk Science and Technology Park"></div>
+            <div class="logo-tile"><img src="logo-switzerland.png" alt="Switzerland Innovation Park Zurich"></div>
+            <div class="logo-tile"><img src="logo-technoport.png" alt="Technoport"></div>
+            <div class="logo-tile"><img src="logo-trentino.jpg" alt="Trentino Sviluppo"></div>
+            <!-- Set 2 -->
+            <div class="logo-tile"><img src="logo-pita.jpg" alt="PITA"></div>
+            <div class="logo-tile"><img src="logo-gdansk.png" alt="Gdansk Science and Technology Park"></div>
+            <div class="logo-tile"><img src="logo-switzerland.png" alt="Switzerland Innovation Park Zurich"></div>
+            <div class="logo-tile"><img src="logo-technoport.png" alt="Technoport"></div>
+            <div class="logo-tile"><img src="logo-trentino.jpg" alt="Trentino Sviluppo"></div>
+            <!-- Set 3 -->
+            <div class="logo-tile"><img src="logo-pita.jpg" alt="PITA"></div>
+            <div class="logo-tile"><img src="logo-gdansk.png" alt="Gdansk Science and Technology Park"></div>
+            <div class="logo-tile"><img src="logo-switzerland.png" alt="Switzerland Innovation Park Zurich"></div>
+            <div class="logo-tile"><img src="logo-technoport.png" alt="Technoport"></div>
+            <div class="logo-tile"><img src="logo-trentino.jpg" alt="Trentino Sviluppo"></div>
+            <!-- Set 4 -->
+            <div class="logo-tile"><img src="logo-pita.jpg" alt="PITA"></div>
+            <div class="logo-tile"><img src="logo-gdansk.png" alt="Gdansk Science and Technology Park"></div>
+            <div class="logo-tile"><img src="logo-switzerland.png" alt="Switzerland Innovation Park Zurich"></div>
+            <div class="logo-tile"><img src="logo-technoport.png" alt="Technoport"></div>
+            <div class="logo-tile"><img src="logo-trentino.jpg" alt="Trentino Sviluppo"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div>
+            <img src="footer-logo-40.png" alt="IASP 40 Years" class="footer-logo">
+            <p class="footer-desc">The International Association of Science Parks and Areas of Innovation — linking the best since 1984.</p>
+        </div>
+        <div class="footer-col">
+            <h6>Headquarters</h6>
+            <p>Tel: +34 95 202 83 03</p>
+            <a href="#">iasp@iasp.ws</a>
+            <a href="#">See our offices</a>
+        </div>
+        <div class="footer-col">
+            <h6>Useful Links</h6>
+            <a href="#">Terms and conditions</a>
+            <a href="#">Aviso legal</a>
+            <a href="#">Meet our team</a>
+        </div>
+        <div class="footer-col">
+            <h6>Social</h6>
+            <a href="#">LinkedIn</a>
+            <a href="#">Twitter / X</a>
+            <a href="#">YouTube</a>
+            <a href="#">Instagram</a>
+        </div>
+    </div>
+    <div class="footer-bar">
+        <span>© 2026 IASP. All rights reserved.</span>
+        <span>Innovation without borders</span>
+    </div>
+</footer>
+
+<script>
+(function(){
+    /* ── Header scroll ─────────────────────── */
+    const hdr = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+        hdr.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ── Slider ────────────────────────────── */
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dots   = Array.from(document.querySelectorAll('.sdot'));
+    let cur = 0, auto;
+
+    function goTo(n) {
+        slides[cur].classList.remove('is-active');
+        dots[cur].classList.remove('is-active');
+        cur = (n + slides.length) % slides.length;
+        slides[cur].classList.add('is-active');
+        dots[cur].classList.add('is-active');
+    }
+
+    function restart() {
+        clearInterval(auto);
+        auto = setInterval(() => goTo(cur + 1), 7000);
+    }
+
+    document.getElementById('sl-next').addEventListener('click', () => { goTo(cur + 1); restart(); });
+    document.getElementById('sl-prev').addEventListener('click', () => { goTo(cur - 1); restart(); });
+    dots.forEach(d => d.addEventListener('click', () => { goTo(+d.dataset.idx); restart(); }));
+    restart();
+
+    /* ── Scroll reveal ─────────────────────── */
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+})();
+</script>
+</body>
+</html>
