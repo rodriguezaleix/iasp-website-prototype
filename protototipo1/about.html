@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - IASP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    :root {
+      --color-primario: #007a8c;
+      --color-primario-dark: #005f6d;
+      --color-secundario: #e37b2d;
+      --color-secundario-dark: #c96b24;
+      --color-verde: #8cc63f;
+      --color-verde-dark: #6a9c2a;
+      --color-azul-oscuro: #0a1f2d;
+      --color-fondo: #f4f7f9;
+      --color-texto: #1e293b;
+      --color-texto-suave: #64748b;
+      --fuente: 'Plus Jakarta Sans', sans-serif;
+      --sombra-suave: 0 10px 40px -10px rgba(0,0,0,0.08);
+      --sombra-fuerte: 0 20px 40px -10px rgba(0, 122, 140, 0.15);
+      --sombra-flotante: 0 30px 60px -15px rgba(0,0,0,0.1);
+      --radio-borde: 24px;
+      --radio-borde-sm: 12px;
+      --transicion: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      font-family: var(--fuente);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: #ffffff; border-bottom: 1px solid #e2e8f0;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--color-texto-suave); position: relative; z-index: 2001;
+    }
+    .top-bar-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; max-width: 1400px; margin: 0 auto; }
+    .top-bar-right { display: flex; gap: 20px; align-items: center; }
+    .social-icons { display: flex; gap: 12px; }
+    .top-bar a { color: var(--color-texto-suave); text-decoration: none; transition: var(--transicion); display: flex; align-items: center; gap: 6px; }
+    .top-bar a:hover { color: var(--color-primario); }
+    .top-bar i { font-size: 14px; }
+    .divider { width: 1px; height: 14px; background-color: #cbd5e1; }
+    .btn-login { background-color: var(--color-azul-oscuro); color: white !important; padding: 6px 18px; border-radius: 50px; }
+    .btn-login:hover { background-color: var(--color-primario); transform: translateY(-1px); }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; width: 100%;
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px);
+      z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.03); transition: var(--transicion);
+    }
+    header.scrolled { background: rgba(255, 255, 255, 0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 5px 0; }
+    .header-container { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; max-width: 1400px; margin: 0 auto; transition: padding 0.3s ease; }
+    .logo-container { text-decoration: none; display: flex; align-items: center; }
+    .logo-img { height: 48px; width: auto; object-fit: contain; }
+    nav { display: flex; gap: 35px; align-items: center; }
+    .nav-link { text-decoration: none; color: var(--color-texto); font-size: 14px; font-weight: 600; transition: var(--transicion); position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background-color: var(--color-primario); transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:hover { color: var(--color-primario); }
+    .nav-link.active { color: var(--color-primario); }
+    .nav-link.active::after { width: 100%; }
+    .btn-members { background: var(--color-primario); color: white; padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: var(--transicion); }
+    .btn-members:hover { background: var(--color-primario-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 122, 140, 0.25); }
+
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(40px); transition: var(--transicion); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* Hero Section (Premium Style) */
+    .about-hero {
+      position: relative;
+      height: 60vh;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radio-borde);
+      margin-top: 20px;
+      overflow: hidden;
+      box-shadow: var(--sombra-flotante);
+    }
+    .about-hero-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: url('about-conference.jpg') center/cover;
+      z-index: 1;
+      transform: scale(1.05);
+    }
+    .about-hero-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, rgba(10,31,45,0.85) 0%, rgba(10,31,45,0.4) 100%);
+      z-index: 2;
+    }
+    .about-hero-content {
+      position: relative; z-index: 3; color: white; text-align: center; max-width: 800px; padding: 0 20px;
+    }
+    .tag {
+      display: inline-block; padding: 6px 14px; border-radius: 50px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.3);
+    }
+    .about-hero h1 { font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
+    .about-hero p { font-size: 1.25rem; color: rgba(255,255,255,0.9); font-weight: 400; max-width: 600px; margin: 0 auto; }
+
+    /* Mission Section (Bento Style Cards) */
+    .mission-section { padding: 100px 0; }
+    .mission-lead {
+      text-align: center; font-size: 1.6rem; font-weight: 700; color: var(--color-azul-oscuro); max-width: 900px; margin: 0 auto 80px; line-height: 1.5;
+    }
+    .mission-lead span { color: var(--color-primario); }
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .mission-card {
+      background: white; border-radius: var(--radio-borde); padding: 50px;
+      box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.03);
+      transition: var(--transicion);
+      position: relative;
+      overflow: hidden;
+    }
+    .mission-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+    }
+    .card-primary::before { background: var(--color-primario); }
+    .card-secondary::before { background: var(--color-secundario); }
+    .mission-card:hover { transform: translateY(-10px); box-shadow: var(--sombra-fuerte); }
+    .mission-card h3 { font-size: 2rem; font-weight: 800; color: var(--color-azul-oscuro); margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+    .mission-card h3 i { color: var(--color-primario); font-size: 32px; background: rgba(0, 122, 140, 0.1); padding: 12px; border-radius: 16px; }
+    .card-secondary h3 i { color: var(--color-secundario); background: rgba(227, 123, 45, 0.1); }
+    .feature-list { list-style: none; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; font-size: 1.05rem; color: var(--color-texto-suave); font-weight: 500; }
+    .feature-list i { font-size: 20px; color: var(--color-verde); flex-shrink: 0; margin-top: 4px; }
+
+    /* Numbers Section (Premium Dark Style) */
+    .stats-wrapper { margin-top: 40px; }
+    .stats-section {
+      background: var(--color-azul-oscuro); color: white; padding: 100px 60px;
+      border-radius: var(--radio-borde); position: relative; overflow: hidden;
+      box-shadow: var(--sombra-flotante);
+    }
+    .stats-section::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: url('bg-blue.png') center/cover; opacity: 0.15; z-index: 1; pointer-events: none;
+    }
+    .stats-header { text-align: center; margin-bottom: 70px; position: relative; z-index: 2; }
+    .stats-header h2 { font-size: 3rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px 30px; position: relative; z-index: 2; text-align: center; }
+    .stat-box { transition: var(--transicion); }
+    .stat-box:hover { transform: translateY(-8px); }
+    .stat-num { font-size: 3.5rem; font-weight: 800; color: var(--color-secundario); line-height: 1; margin-bottom: 15px; }
+    .stat-label { font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 8px; }
+    .stat-desc { font-size: 0.95rem; color: #94a3b8; line-height: 1.4; }
+
+    /* Org Chart Section (Modern Layout) */
+    .org-section { padding: 120px 0; background: white; margin-top: 40px; border-radius: var(--radio-borde); box-shadow: var(--sombra-suave); position: relative; overflow: hidden; }
+    .org-section::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: url('news-map.png') center/contain no-repeat; opacity: 0.03; z-index: 0; pointer-events: none;
+    }
+    .org-header { text-align: center; margin-bottom: 80px; position: relative; z-index: 2; }
+    .org-header h2 { font-size: 3rem; font-weight: 800; color: var(--color-azul-oscuro); letter-spacing: -1px; }
+    .org-container { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+    .org-node { background: white; border: 2px solid #e2e8f0; padding: 20px 40px; border-radius: var(--radio-borde-sm); font-weight: 700; font-size: 1.1rem; color: var(--color-azul-oscuro); box-shadow: 0 10px 20px rgba(0,0,0,0.03); text-align: center; min-width: 320px; transition: var(--transicion); position: relative; }
+    .org-node.primary { background: var(--color-primario); color: white; border-color: var(--color-primario); box-shadow: var(--sombra-fuerte); }
+    .org-node.secondary { background: var(--color-secundario); color: white; border-color: var(--color-secundario); box-shadow: 0 10px 20px rgba(227, 123, 45, 0.2); }
+    .org-node:hover { transform: translateY(-5px); box-shadow: var(--sombra-flotante); }
+    
+    /* Connectors */
+    .connector-v { width: 2px; height: 40px; background: var(--color-primario); opacity: 0.3; margin: 0 auto; }
+    
+    .org-split { display: flex; justify-content: center; gap: 100px; width: 100%; margin-top: 40px; position: relative; }
+    .org-split::before { content: ''; position: absolute; top: -40px; left: calc(50% - 210px); width: 420px; height: 2px; background: var(--color-primario); opacity: 0.3; }
+    
+    .org-branch { display: flex; flex-direction: column; align-items: center; position: relative; }
+    .org-branch::before { content: ''; position: absolute; top: -40px; left: 50%; width: 2px; height: 40px; background: var(--color-primario); opacity: 0.3; }
+    
+    .org-list { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .org-list-item { background: #f8fafc; padding: 12px 24px; border-radius: 8px; font-weight: 600; color: var(--color-texto); border: 1px solid #e2e8f0; transition: var(--transicion); text-align: center; }
+    .org-list-item:hover { background: white; border-color: var(--color-primario); color: var(--color-primario); transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+    /* Forest Section (Like Conference Section in Home) */
+    .forest-section { padding: 120px 0; }
+    .forest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .forest-text .subtitle { display: inline-block; color: var(--color-verde-dark); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 13px; margin-bottom: 20px; background: rgba(140, 198, 63, 0.15); padding: 6px 16px; border-radius: 50px; }
+    .forest-text h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--color-azul-oscuro); margin-bottom: 24px; }
+    .forest-text p { font-size: 1.15rem; color: var(--color-texto-suave); margin-bottom: 30px; line-height: 1.7; }
+    .forest-img-wrapper { position: relative; }
+    .forest-img { height: 500px; width: 100%; border-radius: var(--radio-borde); background: url('about-tree.jpg') center/cover; box-shadow: var(--sombra-fuerte); transition: var(--transicion); }
+    .forest-img-wrapper:hover .forest-img { transform: scale(1.02); }
+    .forest-badge { position: absolute; bottom: -30px; right: -30px; background: white; padding: 24px; border-radius: var(--radio-borde-sm); box-shadow: var(--sombra-flotante); display: flex; align-items: center; gap: 16px; z-index: 2; border: 1px solid #f1f5f9; }
+    .forest-badge i { font-size: 32px; color: var(--color-verde); background: rgba(140, 198, 63, 0.1); padding: 12px; border-radius: 50%; }
+    .forest-badge-text h4 { font-size: 18px; font-weight: 800; color: var(--color-azul-oscuro); }
+    .forest-badge-text p { font-size: 14px; color: var(--color-texto-suave); margin: 0; }
+    
+    .btn-outline { border: 2px solid #e2e8f0; color: var(--color-texto); padding: 16px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 15px; transition: var(--transicion); display: inline-flex; align-items: center; gap: 10px; }
+    .btn-outline:hover { border-color: var(--color-verde); background: var(--color-verde); color: white; box-shadow: 0 10px 20px rgba(140, 198, 63, 0.3); }
+
+    /* Marquee */
+    .marquee-container { background: white; padding: 80px 0; border-top: 1px solid rgba(0, 0, 0, 0.05); border-bottom: 1px solid rgba(0, 0, 0, 0.05); overflow: hidden; white-space: nowrap; margin-top: 40px; }
+    .marquee-container h3 { text-align: center; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; margin-bottom: 50px; }
+    .marquee-content { display: inline-block; animation: scroll 40s linear infinite; }
+    .marquee-content img { height: 60px; margin: 0 60px; object-fit: contain; filter: grayscale(100%) opacity(0.7); transition: var(--transicion); display: inline-block; vertical-align: middle; }
+    .marquee-content img:hover { filter: grayscale(0%) opacity(1); transform: scale(1.05); }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* Footer */
+    footer { background: var(--color-azul-oscuro); color: white; padding: 100px 0 0; position: relative; overflow: hidden; }
+    footer::before { content: ''; position: absolute; top: -150px; right: -150px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0, 122, 140, 0.15) 0%, transparent 70%); border-radius: 50%; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 80px; margin-bottom: 80px; }
+    .footer-logo { height: 65px; background: white; padding: 10px 15px; border-radius: var(--radio-borde-sm); margin-bottom: 25px; display: block; object-fit: contain; }
+    .footer-brand p { color: #94a3b8; font-weight: 500; font-size: 16px; max-width: 350px; line-height: 1.6; }
+    .footer-col h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 30px; color: white; }
+    .footer-col p, .footer-col a { color: #94a3b8; text-decoration: none; font-size: 15px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; transition: var(--transicion); font-weight: 500; }
+    .footer-col a:hover { color: var(--color-secundario); transform: translateX(5px); }
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 30px 0; display: flex; justify-content: space-between; align-items: center; color: #64748b; font-size: 14px; font-weight: 500; }
+    .social-links { display: flex; gap: 20px; }
+    .social-links a { color: #94a3b8; text-decoration: none; font-size: 20px; transition: var(--transicion); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; }
+    .social-links a:hover { background: var(--color-primario); color: white; transform: translateY(-3px); }
+    .to-top { color: white; text-decoration: none; transition: var(--transicion); display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 50px; }
+    .to-top:hover { background: var(--color-secundario); }
+
+    @media (max-width: 1024px) {
+      nav { display: none; }
+      .mission-grid, .forest-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .org-split { flex-direction: column; gap: 40px; }
+      .org-split::before, .org-branch::before { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 50px; }
+      .forest-badge { right: 20px; bottom: -20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-container">
+      <div class="top-bar-left">International Association of Science Parks and Areas of Innovation</div>
+      <div class="top-bar-right">
+        <div class="social-icons">
+          <a href="#"><i class="ph ph-linkedin-logo"></i></a>
+          <a href="#"><i class="ph ph-twitter-logo"></i></a>
+          <a href="#"><i class="ph ph-youtube-logo"></i></a>
+        </div>
+        <div class="divider"></div>
+        <a href="#" class="search-btn"><i class="ph ph-magnifying-glass"></i> Search</a>
+        <a href="#" class="btn-login"><i class="ph ph-user"></i> Login</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-container">
+        <img src="logo.png" alt="IASP Logo" class="logo-img">
+      </a>
+      <nav>
+        <a href="#" class="nav-link">Our Members</a>
+        <a href="#" class="nav-link">Our Industry</a>
+        <a href="#" class="nav-link">Activities</a>
+        <a href="about.html" class="nav-link active">About Us</a>
+        <a href="#" class="nav-link">Join</a>
+      </nav>
+      <a href="#" class="btn-members">
+        Members Area <i class="ph ph-arrow-right"></i>
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Premium Hero Section -->
+    <section class="about-hero reveal">
+      <div class="about-hero-bg"></div>
+      <div class="about-hero-overlay"></div>
+      <div class="about-hero-content">
+        <span class="tag">About IASP</span>
+        <h1>IASP in a few words</h1>
+        <p>Connecting the professionals managing innovation ecosystems worldwide to drive growth, internationalisation and effectiveness.</p>
+      </div>
+    </section>
+
+    <!-- Mission & Vision Cards -->
+    <section class="mission-section">
+      <p class="mission-lead reveal delay-1">Our mission is to be the global network for <span>science parks</span> and <span>areas of innovation</span>, and to drive growth, internationalisation and effectiveness for our members.</p>
+      
+      <div class="mission-grid">
+        <div class="mission-card card-primary reveal delay-2">
+          <h3><i class="ph ph-target"></i> What we do</h3>
+          <ul class="feature-list">
+            <li><i class="ph ph-check-circle"></i> Coordinate an active network of managers of science/technology/research parks, innovation districts and other areas of innovation.</li>
+            <li><i class="ph ph-check-circle"></i> Enhance new business opportunities for members and their companies.</li>
+            <li><i class="ph ph-check-circle"></i> Increase the visibility of our members and multiply their global connections.</li>
+            <li><i class="ph ph-check-circle"></i> Represent parks and areas of innovation at international forums and institutions.</li>
+            <li><i class="ph ph-check-circle"></i> Assist the development of new parks and areas of innovation.</li>
+          </ul>
+        </div>
+
+        <div class="mission-card card-secondary reveal delay-3">
+          <h3><i class="ph ph-users-three"></i> Who we are</h3>
+          <ul class="feature-list">
+            <li><i class="ph ph-check-circle"></i> A worldwide membership based association founded in 1984.</li>
+            <li><i class="ph ph-check-circle"></i> An independent, non-profit, non-governmental organisation.</li>
+            <li><i class="ph ph-check-circle"></i> Managed by experts in science and technology parks, innovation districts, areas of innovation and other innovation spaces.</li>
+            <li><i class="ph ph-check-circle"></i> A Board of Directors ensuring a true international identity (max 2 voting directors per country).</li>
+            <li><i class="ph ph-check-circle"></i> A multilingual management team with World HQ in Malaga (Spain) and a branch in Beijing (China).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Premium Stats Section -->
+    <div class="stats-wrapper reveal">
+      <section class="stats-section">
+        <div class="stats-header">
+          <h2>The IASP world in numbers</h2>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-num">1984</div>
+            <div class="stat-label">Created</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">350</div>
+            <div class="stat-label">Members</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">&gt;115k</div>
+            <div class="stat-label">Companies</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">81</div>
+            <div class="stat-label">Countries</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">42</div>
+            <div class="stat-label">World conferences</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">202</div>
+            <div class="stat-label">Regional events</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">6</div>
+            <div class="stat-label">Regional divisions</div>
+            <div class="stat-desc">African, Asia Pacific, European, Latin American, North American, WANA</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Offices</div>
+            <div class="stat-desc">Malaga (Spain)<br>Beijing (China)</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Organization Chart Modernised -->
+    <section class="org-section reveal delay-1">
+      <div class="org-header">
+        <h2>Organisation chart</h2>
+      </div>
+      <div class="org-container">
+        <div class="org-node primary">IASP General Assembly</div>
+        <div class="connector-v"></div>
+        <div class="org-node primary">International Board of Directors</div>
+        
+        <div class="org-split">
+          <div class="org-branch">
+            <div class="org-node secondary">Chief Executive Officer</div>
+            <div class="org-list">
+              <div class="org-list-item">Advisory Council</div>
+              <div class="org-list-item">Staff Headquarters</div>
+              <div class="org-list-item">Staff China Office</div>
+            </div>
+          </div>
+          <div class="org-branch">
+            <div class="org-node secondary">Regional Divisions</div>
+            <div class="org-list">
+              <div class="org-list-item">Africa</div>
+              <div class="org-list-item">Asia Pacific</div>
+              <div class="org-list-item">Europe</div>
+              <div class="org-list-item">Latin America</div>
+              <div class="org-list-item">North America</div>
+              <div class="org-list-item">WANA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Forest Section Premium -->
+  <section class="forest-section">
+    <div class="container forest-grid">
+      <div class="forest-text reveal">
+        <span class="subtitle">Sustainability & SDGs</span>
+        <h2>The IASP forest</h2>
+        <p>As part of our commitment to sustainability and the UN SDGs, we collaborate with Treedom, a web platform for remote tree planting, making the world greener one tree at a time.</p>
+        <p>We have already started an IASP forest of cacao trees in Cameroon, and IASP members get their very own tree to add to it.</p>
+        <div style="margin-top: 40px;">
+          <a href="#" class="btn-outline" style="background: var(--color-verde); color: white; border-color: var(--color-verde);">Get a tree for your organisation</a>
+        </div>
+      </div>
+      <div class="forest-img-wrapper reveal delay-2">
+        <div class="forest-img"></div>
+        <div class="forest-badge">
+          <i class="ph ph-plant"></i>
+          <div class="forest-badge-text">
+            <h4>Join the movement</h4>
+            <p>Grow with us today</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <section class="marquee-container reveal">
+    <h3>IASP members around the world</h3>
+    <div class="marquee-content">
+      <img src="member1.png" alt="Member">
+      <img src="member2.png" alt="Member">
+      <img src="member3.jpg" alt="Member">
+      <img src="member4.jpg" alt="Member">
+      <img src="member5.jpg" alt="Member">
+      <img src="member1.png" alt="Member">
+      <img src="member2.png" alt="Member">
+      <img src="member3.jpg" alt="Member">
+      <img src="member4.jpg" alt="Member">
+      <img src="member5.jpg" alt="Member">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="footer-logo-40.png" alt="IASP 40 Years Logo" class="footer-logo">
+          <p>The International Association of Science Parks and Areas of Innovation. Connecting the professionals managing innovation ecosystems worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Headquarters</h4>
+          <p><i class="ph ph-map-pin"></i> Elcano 9, 29017 Malaga, Spain</p>
+          <p><i class="ph ph-phone"></i> +34 95 202 83 03</p>
+          <a href="#"><i class="ph ph-envelope-simple"></i> iasp@iasp.ws</a>
+          <a href="#" style="text-decoration: underline; margin-top: 16px;">See our offices</a>
+        </div>
+        <div class="footer-col">
+          <h4>Useful links</h4>
+          <a href="#">Terms and conditions</a>
+          <a href="#">Aviso legal</a>
+          <a href="#">Meet our team</a>
+          <a href="#">Join IASP</a>
+          <a href="#">Cookie Settings</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 IASP. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#"><i class="ph ph-linkedin-logo"></i></a>
+          <a href="#"><i class="ph ph-twitter-logo"></i></a>
+          <a href="#"><i class="ph ph-youtube-logo"></i></a>
+          <a href="#"><i class="ph ph-instagram-logo"></i></a>
+        </div>
+        <a href="#" class="to-top">To top <i class="ph ph-arrow-up"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header Scroll Effect
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll Reveal Animation (Intersection Observer)
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); 
+        }
+      });
+    };
+    const revealOptions = {
+      threshold: 0.15,
+      rootMargin: "0px 0px -50px 0px"
+    };
+    const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+    revealElements.forEach(el => {
+      revealObserver.observe(el);
+    });
+  </script>
+</body>
+</html>
