@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IASP - Prototipo1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Íconos profesionales Phosphor -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    :root {
+      --color-primario: #007a8c;
+      --color-primario-dark: #005f6d;
+      --color-secundario: #e37b2d;
+      --color-secundario-dark: #c96b24;
+      --color-verde: #8cc63f;
+      --color-verde-dark: #6a9c2a;
+      --color-azul-oscuro: #0a1f2d;
+      --color-fondo: #f4f7f9;
+      --color-texto: #1e293b;
+      --color-texto-suave: #64748b;
+      --fuente: 'Plus Jakarta Sans', sans-serif;
+      --sombra-suave: 0 10px 40px -10px rgba(0,0,0,0.08);
+      --sombra-fuerte: 0 20px 40px -10px rgba(0, 122, 140, 0.15);
+      --sombra-flotante: 0 30px 60px -15px rgba(0,0,0,0.1);
+      --radio-borde: 24px;
+      --radio-borde-sm: 12px;
+      --transicion: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      font-family: var(--fuente);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Utilitarios */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: var(--transicion);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-texto-suave);
+      position: relative;
+      z-index: 2001;
+    }
+
+    .top-bar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .top-bar-right {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .top-bar a {
+      color: var(--color-texto-suave);
+      text-decoration: none;
+      transition: var(--transicion);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .top-bar a:hover {
+      color: var(--color-primario);
+    }
+
+    .top-bar i {
+      font-size: 14px;
+    }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background-color: #cbd5e1;
+    }
+
+    .btn-login {
+      background-color: var(--color-azul-oscuro);
+      color: white !important;
+      padding: 6px 18px;
+      border-radius: 50px;
+    }
+
+    .btn-login:hover {
+      background-color: var(--color-primario);
+      transform: translateY(-1px);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+      transition: var(--transicion);
+    }
+
+    header.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      padding: 5px 0;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+      transition: padding 0.3s ease;
+    }
+
+    .logo-container {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    nav {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--color-texto);
+      font-size: 14px;
+      font-weight: 600;
+      transition: var(--transicion);
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--color-primario);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--color-primario);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-members {
+      background: var(--color-primario);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: var(--transicion);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-members:hover {
+      background: var(--color-primario-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 122, 140, 0.25);
+    }
+
+    /* Slider */
+    .slider-wrapper {
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .slider-container {
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+      height: 70vh;
+      min-height: 600px;
+      box-shadow: var(--sombra-suave);
+      position: relative;
+    }
+
+    .slider-track {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.2, 1);
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 8%;
+      color: white;
+      overflow: hidden;
+    }
+
+    .slide-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      transition: transform 6s ease-out;
+      transform: scale(1.1);
+    }
+
+    .slide.active .slide-bg {
+      transform: scale(1);
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(10,31,45,0.9) 0%, rgba(10,31,45,0.4) 50%, rgba(10,31,45,0.1) 100%);
+      z-index: -1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 10;
+      max-width: 750px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.3);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+    }
+
+    .slide h1 {
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+    }
+
+    .slide p {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 40px;
+      color: rgba(255, 255, 255, 0.85);
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .btn-slide {
+      padding: 16px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+    }
+
+    .btn-slide i {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-slide:hover i {
+      transform: translateX(4px);
+    }
+
+    .slide.active .tag,
+    .slide.active h1,
+    .slide.active p,
+    .slide.active .btn-slide {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .btn-orange {
+      background: var(--color-secundario);
+      color: white;
+      box-shadow: 0 10px 30px rgba(227, 123, 45, 0.3);
+    }
+
+    .btn-orange:hover {
+      background: var(--color-secundario-dark);
+    }
+
+    .btn-green {
+      background: var(--color-verde);
+      color: white;
+      box-shadow: 0 10px 30px rgba(140, 198, 63, 0.3);
+    }
+
+    .btn-green:hover {
+      background: var(--color-verde-dark);
+    }
+
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 28px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: var(--transicion);
+      z-index: 20;
+    }
+
+    .slider-arrow.prev {
+      left: 3%;
+    }
+
+    .slider-arrow.next {
+      right: 3%;
+    }
+
+    .slider-arrow:hover {
+      background: white;
+      color: var(--color-primario);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 20;
+    }
+
+    .dot {
+      width: 40px;
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transicion);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .dot-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: white;
+      width: 0%;
+      border-radius: 4px;
+    }
+
+    .dot.active .dot-progress {
+      background: white;
+    }
+
+    /* Bento Grid */
+    .bento-section {
+      padding: 80px 0;
+      margin-top: -40px;
+      position: relative;
+      z-index: 30;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .bento-card {
+      border-radius: var(--radio-borde);
+      padding: 40px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 360px;
+      box-shadow: var(--sombra-flotante);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transicion);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--color-azul-oscuro);
+    }
+
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bento-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.6) 100%);
+      pointer-events: none;
+      z-index: 1;
+      transition: var(--transicion);
+    }
+
+    .bento-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px -10px rgba(0,0,0,0.3);
+    }
+
+    .bento-card:hover::before {
+      transform: scale(1.1);
+    }
+
+    .bento-content {
+      margin-top: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .bento-card h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 15px;
+    }
+
+    .bento-card p {
+      font-size: 1.05rem;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .bento-link {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transicion);
+    }
+
+    .bento-card:hover .bento-link {
+      gap: 12px;
+    }
+
+    .bento-green::before { background-image: url('bg-green.png'); }
+    .bento-orange::before { background-image: url('bg-orange.jpg'); }
+    .bento-blue::before { background-image: url('bg-blue.png'); }
+
+    /* Conference Section */
+    .conference-section {
+      padding: 100px 0;
+      background: white;
+    }
+
+    .conf-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .conf-img-wrapper {
+      position: relative;
+    }
+
+    .conf-img {
+      height: 600px;
+      border-radius: var(--radio-borde);
+      background: url('conference.jpg') center/cover;
+      box-shadow: var(--sombra-suave);
+    }
+
+    .conf-badge {
+      position: absolute;
+      bottom: 40px;
+      left: -30px;
+      background: white;
+      padding: 24px;
+      border-radius: var(--radio-borde-sm);
+      box-shadow: var(--sombra-fuerte);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .conf-badge-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-secundario);
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .conf-badge-text h4 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--color-azul-oscuro);
+    }
+
+    .conf-badge-text p {
+      font-size: 14px;
+      color: var(--color-texto-suave);
+      margin: 0;
+    }
+
+    .conf-text .subtitle {
+      display: inline-block;
+      color: var(--color-secundario);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      background: rgba(227, 123, 45, 0.1);
+      padding: 6px 16px;
+      border-radius: 50px;
+    }
+
+    .conf-text h2 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--color-azul-oscuro);
+      margin-bottom: 24px;
+    }
+
+    .conf-text p {
+      font-size: 1.15rem;
+      color: var(--color-texto-suave);
+      margin-bottom: 40px;
+    }
+
+    .btn-outline {
+      border: 2px solid #e2e8f0;
+      color: var(--color-texto);
+      padding: 16px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: var(--transicion);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-primario);
+      background: var(--color-primario);
+      color: white;
+      box-shadow: 0 10px 20px rgba(0, 122, 140, 0.2);
+    }
+
+    /* News Section */
+    .news-section {
+      padding: 120px 0;
+    }
+
+    .news-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .news-header h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: var(--color-azul-oscuro);
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+    }
+
+    .news-card {
+      background: white;
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      transition: var(--transicion);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f1f5f9;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .news-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--sombra-fuerte);
+      border-color: rgba(0, 122, 140, 0.1);
+    }
+
+    .news-img-wrapper {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .news-img {
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .news-card:hover .news-img {
+      transform: scale(1.08);
+    }
+
+    .news-content {
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .news-date {
+      color: var(--color-primario);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .news-content h4 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--color-azul-oscuro);
+      margin-bottom: 20px;
+      transition: var(--transicion);
+    }
+
+    .news-card:hover h4 {
+      color: var(--color-primario);
+    }
+
+    .read-more {
+      margin-top: auto;
+      font-weight: 700;
+      color: var(--color-texto-suave);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transicion);
+      font-size: 14px;
+    }
+
+    .news-card:hover .read-more {
+      color: var(--color-primario);
+      gap: 12px;
+    }
+
+    /* Marquee */
+    .marquee-container {
+      background: white;
+      padding: 80px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-container h3 {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #94a3b8;
+      margin-bottom: 50px;
+    }
+
+    .marquee-content {
+      display: inline-block;
+      animation: scroll 40s linear infinite;
+    }
+
+    .marquee-content img {
+      height: 60px;
+      margin: 0 60px;
+      object-fit: contain;
+      filter: grayscale(100%) opacity(0.7);
+      transition: var(--transicion);
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .marquee-content img:hover {
+      filter: grayscale(0%) opacity(1);
+      transform: scale(1.05);
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-azul-oscuro);
+      color: white;
+      padding: 100px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 122, 140, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 80px;
+    }
+
+    .footer-logo {
+      height: 65px;
+      background: white;
+      padding: 10px 15px;
+      border-radius: var(--radio-borde-sm);
+      margin-bottom: 25px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .footer-brand p {
+      color: #94a3b8;
+      font-weight: 500;
+      font-size: 16px;
+      max-width: 350px;
+      line-height: 1.6;
+    }
+
+    .footer-col h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .footer-col p,
+    .footer-col a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 15px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transicion);
+      font-weight: 500;
+    }
+
+    .footer-col a:hover {
+      color: var(--color-secundario);
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 30px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 20px;
+      transition: var(--transicion);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-links a:hover {
+      background: var(--color-primario);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .to-top {
+      color: white;
+      text-decoration: none;
+      transition: var(--transicion);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      padding: 10px 20px;
+      border-radius: 50px;
+    }
+
+    .to-top:hover {
+      background: var(--color-secundario);
+    }
+
+    @media (max-width: 1024px) {
+      nav { display: none; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .conf-grid, .footer-grid { grid-template-columns: 1fr; gap: 50px; }
+      .conf-img { height: 400px; }
+      .conf-badge { left: 20px; bottom: -20px; }
+      .slider-container { height: 60vh; min-height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="top-bar-container">
+      <div class="top-bar-left">International Association of Science Parks and Areas of Innovation</div>
+      <div class="top-bar-right">
+        <div class="social-icons">
+          <a href="#"><i class="ph ph-linkedin-logo"></i></a>
+          <a href="#"><i class="ph ph-twitter-logo"></i></a>
+          <a href="#"><i class="ph ph-youtube-logo"></i></a>
+        </div>
+        <div class="divider"></div>
+        <a href="#" class="search-btn"><i class="ph ph-magnifying-glass"></i> Search</a>
+        <a href="#" class="btn-login"><i class="ph ph-user"></i> Login</a>
+      </div>
+    </div>
+  </div>
+
+  <header id="main-header">
+    <div class="header-container">
+      <a href="#" class="logo-container">
+        <img src="logo.png" alt="IASP Logo" class="logo-img">
+      </a>
+      <nav>
+        <a href="#" class="nav-link">Our Members</a>
+        <a href="#" class="nav-link">Our Industry</a>
+        <a href="#" class="nav-link">Activities</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="#" class="nav-link">Join</a>
+      </nav>
+      <a href="#" class="btn-members">
+        Members Area <i class="ph ph-arrow-right"></i>
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="slider-wrapper reveal">
+      <div class="slider-container">
+        <div class="slider-track" id="sliderTrack">
+          
+          <div class="slide active">
+            <div class="slide-bg" style="background-image: url('slider-network.jpg');"></div>
+            <div class="slide-content">
+              <span class="tag">Global Network</span>
+              <h1>Innovation ecosystems worldwide</h1>
+              <p>The global network of science parks, innovation hubs, areas of innovation and more. Connecting professionals to drive growth and knowledge sharing.</p>
+              <a href="#" class="btn-slide btn-green">Member Directory <i class="ph ph-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="slide">
+            <div class="slide-bg" style="background-image: url('slider-strategic.jpg');"></div>
+            <div class="slide-content">
+              <span class="tag">Services</span>
+              <h1>Strategic Development Support</h1>
+              <p>Empowering spaces of innovation with tailored resources, networking opportunities, and global visibility.</p>
+              <a href="#" class="btn-slide btn-green">Explore Services <i class="ph ph-arrow-right"></i></a>
+            </div>
+          </div>
+
+        </div>
+
+        <button class="slider-arrow prev" onclick="moveSlide(-1)"><i class="ph ph-caret-left"></i></button>
+        <button class="slider-arrow next" onclick="moveSlide(1)"><i class="ph ph-caret-right"></i></button>
+
+        <div class="slider-dots">
+          <div class="dot active" onclick="goToSlide(0)"><div class="dot-progress"></div></div>
+          <div class="dot" onclick="goToSlide(1)"><div class="dot-progress"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bento-section">
+      <div class="bento-grid">
+        <div class="bento-card bento-green reveal delay-1">
+          <div class="bento-content">
+            <h3>Inspiring Solutions</h3>
+            <p>Innovative best practices in STP, ID and AOI management to inspire others.</p>
+            <a href="#" class="bento-link">Find out more <i class="ph ph-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="bento-card bento-orange reveal delay-2">
+          <div class="bento-content">
+            <h3>Open Opportunities</h3>
+            <p>Fast track to information and deadlines, call for papers, competitions, projects, funding and more.</p>
+            <a href="#" class="bento-link">See more <i class="ph ph-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="bento-card bento-blue reveal delay-3">
+          <div class="bento-content">
+            <h3>IASP 40</h3>
+            <p>IASP reached the milestone of 40 years! Read notes and best wishes from colleagues in our Kudosboard.</p>
+            <a href="#" class="bento-link">Share your memories <i class="ph ph-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="conference-section">
+    <div class="container conf-grid">
+      <div class="conf-img-wrapper reveal">
+        <div class="conf-img"></div>
+        <div class="conf-badge">
+          <div class="conf-badge-icon"><i class="ph ph-calendar-blank"></i></div>
+          <div class="conf-badge-text">
+            <h4>24-27 Sept 2026</h4>
+            <p>Nairobi, Kenya</p>
+          </div>
+        </div>
+      </div>
+      <div class="conf-text reveal delay-2">
+        <span class="subtitle">Next IASP World Conference</span>
+        <h2>43rd IASP World Conference on Science Parks</h2>
+        <p>Tech for humanity: shaping values for a human-centric future. Join industry leaders, innovators, and policy makers from around the globe to discuss the future of technology and its impact on society.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="#" class="btn-outline" style="background: var(--color-primario); color: white; border-color: var(--color-primario);">Register Now</a>
+          <a href="#" class="btn-outline">Other IASP Events <i class="ph ph-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="news-section container">
+    <div class="news-header reveal">
+      <h2>Latest news</h2>
+      <a href="#" class="btn-outline">See all news <i class="ph ph-arrow-right"></i></a>
+    </div>
+    <div class="news-grid">
+      <a href="#" class="news-card reveal delay-1">
+        <div class="news-img-wrapper">
+          <div class="news-img" style="background-image: url('news-forum.jpg');"></div>
+        </div>
+        <div class="news-content">
+          <span class="news-date"><i class="ph ph-calendar"></i> 06 May 2026</span>
+          <h4>StartSmart Investment Forum 2026 brings together over 100 deep tech startups and investors in Riyadh</h4>
+          <span class="read-more">Read article <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="#" class="news-card reveal delay-2">
+        <div class="news-img-wrapper">
+          <div class="news-img" style="background-image: url('news-map.png');"></div>
+        </div>
+        <div class="news-content">
+          <span class="news-date"><i class="ph ph-calendar"></i> 30 April 2026</span>
+          <h4>Join us in welcoming this month's new Full Members from across the globe!</h4>
+          <span class="read-more">Read article <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="#" class="news-card reveal delay-3">
+        <div class="news-img-wrapper">
+          <div class="news-img" style="background-image: url('news-chart.png');"></div>
+        </div>
+        <div class="news-content">
+          <span class="news-date"><i class="ph ph-calendar"></i> 29 April 2026</span>
+          <h4>April's Question of the Month: Do you carry out impact reports on your AOI/ID/STP?</h4>
+          <span class="read-more">Read article <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="marquee-container reveal">
+    <h3>IASP members around the world</h3>
+    <div class="marquee-content">
+      <img src="member1.png" alt="Member">
+      <img src="member2.png" alt="Member">
+      <img src="member3.jpg" alt="Member">
+      <img src="member4.jpg" alt="Member">
+      <img src="member5.jpg" alt="Member">
+      <img src="member1.png" alt="Member">
+      <img src="member2.png" alt="Member">
+      <img src="member3.jpg" alt="Member">
+      <img src="member4.jpg" alt="Member">
+      <img src="member5.jpg" alt="Member">
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="footer-logo-40.png" alt="IASP 40 Years Logo" class="footer-logo">
+          <p>The International Association of Science Parks and Areas of Innovation. Connecting the professionals managing innovation ecosystems worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Headquarters</h4>
+          <p><i class="ph ph-map-pin"></i> Elcano 9, 29017 Malaga, Spain</p>
+          <p><i class="ph ph-phone"></i> +34 95 202 83 03</p>
+          <a href="#"><i class="ph ph-envelope-simple"></i> iasp@iasp.ws</a>
+          <a href="#" style="text-decoration: underline; margin-top: 16px;">See our offices</a>
+        </div>
+        <div class="footer-col">
+          <h4>Useful links</h4>
+          <a href="#">Terms and conditions</a>
+          <a href="#">Aviso legal</a>
+          <a href="#">Meet our team</a>
+          <a href="#">Join IASP</a>
+          <a href="#">Cookie Settings</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 IASP. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#"><i class="ph ph-linkedin-logo"></i></a>
+          <a href="#"><i class="ph ph-twitter-logo"></i></a>
+          <a href="#"><i class="ph ph-youtube-logo"></i></a>
+          <a href="#"><i class="ph ph-instagram-logo"></i></a>
+        </div>
+        <a href="#" class="to-top">To top <i class="ph ph-arrow-up"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header Scroll Effect
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Slider Logic
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const track = document.getElementById('sliderTrack');
+    let progressInterval;
+    let progress = 0;
+    const duration = 5000;
+    const intervalStep = 50;
+
+    function updateSlider() {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => {
+        d.classList.remove('active');
+        d.querySelector('.dot-progress').style.width = '0%';
+      });
+      
+      track.style.transform = `translateX(-${slideIndex * 100}%)`;
+      slides[slideIndex].classList.add('active');
+      dots[slideIndex].classList.add('active');
+      progress = 0;
+    }
+
+    function moveSlide(step) {
+      slideIndex += step;
+      if (slideIndex >= slides.length) slideIndex = 0;
+      if (slideIndex < 0) slideIndex = slides.length - 1;
+      updateSlider();
+    }
+
+    function goToSlide(index) {
+      slideIndex = index;
+      updateSlider();
+    }
+
+    function startAutoPlay() {
+      clearInterval(progressInterval);
+      progress = 0;
+      
+      progressInterval = setInterval(() => {
+        progress += intervalStep;
+        
+        const activeDot = dots[slideIndex].querySelector('.dot-progress');
+        if (activeDot) {
+          activeDot.style.width = `${(progress / duration) * 100}%`;
+        }
+        
+        if (progress >= duration) {
+          moveSlide(1);
+        }
+      }, intervalStep);
+    }
+
+    // Attach click events to reset interval properly when clicked
+    document.querySelectorAll('.slider-arrow').forEach(btn => {
+      btn.addEventListener('click', () => startAutoPlay());
+    });
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => startAutoPlay());
+    });
+
+    startAutoPlay(); // Initialize auto-sliding
+
+    // Scroll Reveal Animation (Intersection Observer)
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Only animate once
+        }
+      });
+    };
+
+    const revealOptions = {
+      threshold: 0.15,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+    
+    revealElements.forEach(el => {
+      revealObserver.observe(el);
+    });
+  </script>
+</body>
+</html>
