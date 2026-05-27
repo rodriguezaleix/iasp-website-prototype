@@ -605,7 +605,7 @@
 
     /* ── Filter ribbon ─────────────────────── */
     .blog-filter-ribbon {
-        position: sticky; top: 100px; z-index: 50;
+        position: sticky; top: 117px; z-index: 50;
         background: var(--ink);
         border-bottom: 1px solid rgba(4,7,11,0.04);
         padding: 0 6%;
@@ -754,9 +754,9 @@
     .mc-card:first-child .mc-title { font-size:clamp(1.5rem, 2.2vw, 2.2rem); letter-spacing:-0.7px; }
     /* Hover overlay */
     .mc-reveal {
-        position:absolute; inset:0; padding:20px; z-index:3;
+        position:absolute; inset:0; padding:16px; z-index:3;
         display:flex; flex-direction:column; justify-content:flex-end; gap:6px;
-        background: linear-gradient(to top, rgba(4,7,11,0.97) 0%, rgba(4,7,11,0.65) 60%, rgba(4,7,11,0.2) 100%);
+        background: linear-gradient(to top, rgba(4,7,11,0.97) 0%, rgba(4,7,11,0.75) 70%, rgba(4,7,11,0.3) 100%);
         opacity:0; transform:translateY(16px);
         transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -767,13 +767,11 @@
     .mc-meta i { color:rgba(100,220,240,0.8); margin-right:4px; }
     .mc-reveal-title {
         font-family:var(--font-h); font-weight:800; color:#fff; line-height:1.2;
-
-        font-size:1.05rem; letter-spacing:-0.3px;
+        font-size:1rem; letter-spacing:-0.2px;
     }
     .mc-card:first-child .mc-reveal-title { font-size:clamp(1.4rem, 2vw, 2rem); }
-    .mc-reveal-excerpt { display:none; }
-    .mc-card:first-child .mc-reveal-excerpt {
-        font-size:0.85rem; color:rgba(255,255,255,0.7); line-height:1.5; font-weight:400;
+    .mc-reveal-excerpt {
+        font-size:0.8rem; color:rgba(255,255,255,0.7); line-height:1.4; font-weight:400;
         display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
     }
     .mc-read {
