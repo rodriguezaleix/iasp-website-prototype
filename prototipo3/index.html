@@ -161,7 +161,7 @@
     /* ────────────────────────────────────────────
        HERO SLIDER
     ──────────────────────────────────────────── */
-    .hero { position:relative; height:70svh; min-height:500px; overflow:hidden; }
+    .hero { position:relative; height:50svh; min-height:400px; overflow:hidden; }
 
     /* slides stacked */
     .slide { position:absolute; inset:0; display:flex; align-items:flex-end; overflow:hidden; }
@@ -190,7 +190,7 @@
     /* content */
     .slide-inner {
         position:relative; z-index:3;
-        width:100%; padding: 100px 6% 5%;
+        width:100%; padding: 60px 6% 40px;
         display:grid;
         grid-template-rows: auto auto;
         gap: 28px;
@@ -315,7 +315,7 @@
     /* ────────────────────────────────────────────
        FEATURE CARDS  (sticky stack)
     ──────────────────────────────────────────── */
-    .cards-section { padding:80px 0 60px; }
+    .cards-section { padding:40px 0 30px; }
     .cards-inner { max-width:1320px; margin:0 auto; padding:0 6%; }
 
     .eyebrow {
@@ -385,7 +385,7 @@
     /* ────────────────────────────────────────────
        CONFERENCE SECTION
     ──────────────────────────────────────────── */
-    .conf-section { position:relative; height:60vh; min-height:400px; overflow:hidden; display:flex; align-items:flex-end; }
+    .conf-section { position:relative; height:400px; overflow:hidden; display:flex; align-items:flex-end; }
     .conf-bg {
         position:absolute; inset:0;
         background:url('cannes.jpg') center/cover;
@@ -434,7 +434,7 @@
     /* ────────────────────────────────────────────
        NEWS  (editorial list)
     ──────────────────────────────────────────── */
-    .news-section { padding:80px 6%; max-width:1320px; margin:0 auto; }
+    .news-section { padding:40px 6%; max-width:1320px; margin:0 auto; }
     .news-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:72px; }
     .news-heading {
         font-family:var(--font-h); font-size:clamp(2.5rem,4.5vw,5rem);
@@ -474,7 +474,7 @@
     /* ────────────────────────────────────────────
        MEMBERS CAROUSEL
     ──────────────────────────────────────────── */
-    .members-band { padding:48px 0; background:#ebeae5; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
+    .members-band { padding:32px 0; background:#ebeae5; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
     .members-label { text-align:center; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--cyan); margin-bottom:44px; }
 
     .carousel-wrap { position:relative; overflow:hidden; }
@@ -499,7 +499,7 @@
     /* ────────────────────────────────────────────
        FOOTER
     ──────────────────────────────────────────── */
-    .site-footer { padding:80px 6% 40px; }
+    .site-footer { padding:60px 6% 30px; }
     .footer-grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; }
     .footer-logo { height:52px; margin-bottom:22px; }
     .footer-desc { color:var(--muted); font-size:15px; line-height:1.75; max-width:260px; }
@@ -740,7 +740,7 @@
 <!-- ═══════════════════════════════════════════════
      NEWS
 ═══════════════════════════════════════════════ -->
-<div style="max-width:1320px; margin:0 auto; padding:80px 6% 0;">
+<div style="max-width:1320px; margin:0 auto; padding:40px 6% 0;">
     <div class="news-head">
         <h2 class="news-heading" data-reveal="0">
             Latest News
@@ -770,7 +770,7 @@
 <!-- ═══════════════════════════════════════════════
      MEMBER LOGOS
 ═══════════════════════════════════════════════ -->
-<section class="members-band" style="margin-top:80px;" aria-label="IASP members">
+<section class="members-band" style="margin-top:40px;" aria-label="IASP members">
     <p class="members-label">IASP members around the world</p>
     <div class="carousel-wrap">
         <div class="carousel-track">
