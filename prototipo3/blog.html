@@ -1220,7 +1220,7 @@
         cards().forEach(card => {
             if (!card.classList.contains('hidden') && !featured) {
                 card.style.gridColumn = 'span 2';
-                card.style.gridRow = 'span 2';
+                card.style.gridRow = '';
                 featured = true;
             } else {
                 card.style.gridColumn = '';
