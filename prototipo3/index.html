@@ -161,7 +161,7 @@
     /* ────────────────────────────────────────────
        HERO SLIDER
     ──────────────────────────────────────────── */
-    .hero { position:relative; height:50svh; min-height:400px; overflow:hidden; }
+    .hero { position:relative; height:100svh; min-height:600px; overflow:hidden; }
 
     /* slides stacked */
     .slide { position:absolute; inset:0; display:flex; align-items:flex-end; overflow:hidden; }
@@ -190,7 +190,7 @@
     /* content */
     .slide-inner {
         position:relative; z-index:3;
-        width:100%; padding: 60px 6% 40px;
+        width:100%; padding: 140px 6% 7%;
         display:grid;
         grid-template-rows: auto auto;
         gap: 28px;
@@ -214,14 +214,13 @@
         display:flex; flex-direction:column; gap:0;
     }
     .hline {
-        overflow:hidden; display:block;
+        overflow:hidden; display:block; line-height:1.05;
     }
     .hline-inner {
         display:block;
         font-family: var(--font-h);
         font-weight: 800;
         font-size: clamp(2.6rem, 4.5vw, 5rem);
-        line-height: 1.1;
         text-transform: capitalize;
         letter-spacing: -1px;
         color: var(--off);
@@ -306,7 +305,7 @@
     .stat:hover { background:var(--glass); }
     .stat:hover::before { transform:scaleX(1); }
     .stat-n {
-        font-family:var(--font-h); font-size:clamp(2.5rem, 4vw, 3.5rem);
+        font-family:var(--font-h); font-size:clamp(2.8rem,4.5vw,4.5rem);
         font-weight:900; line-height:1;
         color:var(--off);
     }
@@ -316,12 +315,12 @@
     /* ────────────────────────────────────────────
        FEATURE CARDS  (sticky stack)
     ──────────────────────────────────────────── */
-    .cards-section { padding:40px 0 30px; }
+    .cards-section { padding:140px 0 120px; }
     .cards-inner { max-width:1320px; margin:0 auto; padding:0 6%; }
 
     .eyebrow {
         font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--muted);
-        display:flex; align-items:center; gap:14px; margin-bottom:40px;
+        display:flex; align-items:center; gap:14px; margin-bottom:80px;
     }
     .eyebrow::before { content:''; width:36px; height:1px; background:var(--border); }
 
@@ -367,7 +366,7 @@
 
     .feat-title {
         font-family:var(--font-h);
-        font-size:clamp(2.2rem, 4vw, 3.5rem);
+        font-size:clamp(2.8rem,4.8vw,5rem);
         font-weight:900; line-height:0.95;
         text-transform:uppercase; letter-spacing:-1.5px;
         margin-bottom:22px;
@@ -386,7 +385,7 @@
     /* ────────────────────────────────────────────
        CONFERENCE SECTION
     ──────────────────────────────────────────── */
-    .conf-section { position:relative; height:400px; overflow:hidden; display:flex; align-items:flex-end; }
+    .conf-section { position:relative; height:90vh; overflow:hidden; display:flex; align-items:flex-end; }
     .conf-bg {
         position:absolute; inset:0;
         background:url('cannes.jpg') center/cover;
@@ -413,7 +412,7 @@
     .conf-kicker::before { content:''; width:26px; height:1px; background:var(--amber); }
     .conf-title {
         font-family:var(--font-h);
-        font-size:clamp(2.5rem, 4vw, 4rem);
+        font-size:clamp(2.8rem,5.5vw,6rem);
         font-weight:800; text-transform:uppercase;
         line-height:1.05; letter-spacing:-1.5px;
         color: #ffffff;
@@ -435,10 +434,10 @@
     /* ────────────────────────────────────────────
        NEWS  (editorial list)
     ──────────────────────────────────────────── */
-    .news-section { padding:40px 6%; max-width:1320px; margin:0 auto; }
-    .news-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px; }
+    .news-section { padding:140px 6%; max-width:1320px; margin:0 auto; }
+    .news-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:72px; }
     .news-heading {
-        font-family:var(--font-h); font-size:clamp(2rem, 4vw, 3.5rem);
+        font-family:var(--font-h); font-size:clamp(2.5rem,4.5vw,5rem);
         font-weight:800; text-transform:uppercase; letter-spacing:-1px; line-height:1.05;
         color: var(--off);
     }
@@ -475,7 +474,7 @@
     /* ────────────────────────────────────────────
        MEMBERS CAROUSEL
     ──────────────────────────────────────────── */
-    .members-band { padding:32px 0; background:#ebeae5; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
+    .members-band { padding:72px 0; background:#ebeae5; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
     .members-label { text-align:center; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--cyan); margin-bottom:44px; }
 
     .carousel-wrap { position:relative; overflow:hidden; }
@@ -500,8 +499,8 @@
     /* ────────────────────────────────────────────
        FOOTER
     ──────────────────────────────────────────── */
-    .site-footer { padding:60px 6% 30px; }
-    .footer-grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; }
+    .site-footer { padding:100px 6% 52px; }
+    .footer-grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:64px; }
     .footer-logo { height:52px; margin-bottom:22px; }
     .footer-desc { color:var(--muted); font-size:15px; line-height:1.75; max-width:260px; }
     .footer-col h6 { font-family:var(--font-h); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:28px; }
@@ -741,7 +740,7 @@
 <!-- ═══════════════════════════════════════════════
      NEWS
 ═══════════════════════════════════════════════ -->
-<div style="max-width:1320px; margin:0 auto; padding:40px 6% 0;">
+<div style="max-width:1320px; margin:0 auto; padding:140px 6% 0;">
     <div class="news-head">
         <h2 class="news-heading" data-reveal="0">
             Latest News
@@ -771,7 +770,7 @@
 <!-- ═══════════════════════════════════════════════
      MEMBER LOGOS
 ═══════════════════════════════════════════════ -->
-<section class="members-band" style="margin-top:40px;" aria-label="IASP members">
+<section class="members-band" style="margin-top:140px;" aria-label="IASP members">
     <p class="members-label">IASP members around the world</p>
     <div class="carousel-wrap">
         <div class="carousel-track">
