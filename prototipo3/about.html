@@ -133,8 +133,8 @@
        HERO (Buenos Aires Image)
     ──────────────────────────────────────────── */
     .about-hero {
-        position: relative; overflow: hidden; min-height: 95vh;
-        display: flex; align-items: flex-end; padding: 160px 6% 80px; margin-bottom: 0;
+        position: relative; overflow: hidden; min-height: 70vh;
+        display: flex; align-items: flex-end; padding: 120px 6% 60px; margin-bottom: 0;
     }
     .about-hero-bg {
         position:absolute; inset:0; z-index:0;
@@ -177,7 +177,7 @@
     ──────────────────────────────────────────── */
     .mission-wrap {
         background: var(--grey);
-        color: var(--off); padding: 140px 0 80px; position: relative; z-index: 10;
+        color: var(--off); padding: 80px 0 60px; position: relative; z-index: 10;
     }
     .mission-header { text-align: center; margin-bottom: 100px; padding: 0 6%; }
     .mission-header h2 { font-family: var(--font-h); font-size: clamp(3rem, 6vw, 6rem); font-weight: 900; letter-spacing: -3px; color: var(--off); line-height: 0.9; }
@@ -222,7 +222,7 @@
     /* ────────────────────────────────────────────
        NUMBERS (Premium Dashboard Bento)
     ──────────────────────────────────────────── */
-    .numbers-wrap { background: var(--grey); padding: 160px 6% 80px; position:relative; z-index:5; }
+    .numbers-wrap { background: var(--grey); padding: 100px 6% 60px; position:relative; z-index:5; }
     .n-header { text-align: center; margin-bottom: 100px; max-width: 800px; margin-left: auto; margin-right: auto; }
     .n-header h2 { font-family: var(--font-h); font-size: clamp(3rem, 5vw, 5rem); font-weight: 900; letter-spacing: -2px; color: var(--off); }
     .n-header p { font-size: 1.25rem; color: var(--muted); margin-top: 20px; }
@@ -280,7 +280,7 @@
     /* ────────────────────────────────────────────
        ORG CHART (Full Color Accordion)
     ──────────────────────────────────────────── */
-    .org-wrap { padding: 80px 6% 160px; background: var(--grey); color: var(--off); }
+    .org-wrap { padding: 60px 6% 100px; background: var(--grey); color: var(--off); }
     .o-header { text-align: center; margin-bottom: 80px; }
     .o-header h2 { font-family: var(--font-h); font-size: clamp(3rem, 5vw, 5rem); font-weight: 900; letter-spacing: -2px; }
 
@@ -324,10 +324,10 @@
        THE IASP FOREST (Premium Banner)
     ──────────────────────────────────────────── */
     .forest-wrap {
-        position: relative; padding: 140px 6%;
+        position: relative; padding: 100px 6%;
         background: url('about-tree.jpg') center/cover fixed;
         display: flex; align-items: center; justify-content: center;
-        min-height: 85vh; text-align: center;
+        min-height: 60vh; text-align: center;
     }
     .forest-wrap::before {
         content: ''; position: absolute; inset: 0;
@@ -344,11 +344,11 @@
         display: flex; flex-direction: column; align-items: center;
     }
     .forest-card h2 {
-        font-family: var(--font-h); font-size: clamp(3rem, 6vw, 6rem); font-weight: 900;
-        line-height: 0.9; letter-spacing: -2px; margin-bottom: 32px; color: var(--lime);
+        font-family: var(--font-h); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900;
+        line-height: 0.9; letter-spacing: -2px; margin-bottom: 24px; color: var(--lime);
     }
     .forest-card p {
-        font-size: 1.25rem; line-height: 1.6; margin-bottom: 24px; color: rgba(255,255,255,0.85); font-weight: 500;
+        font-size: 1.15rem; line-height: 1.6; margin-bottom: 24px; color: rgba(255,255,255,0.85); font-weight: 500;
     }
     .btn-forest {
         display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-h); font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
@@ -360,7 +360,7 @@
     /* ────────────────────────────────────────────
        MEMBERS & FOOTER
     ──────────────────────────────────────────── */
-    .members-band { padding:72px 0; background:#ebeae5; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; margin-top:80px; }
+    .members-band { padding:48px 0; background:#ebeae5; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; margin-top:60px; }
     .members-label { text-align:center; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--cyan); margin-bottom:44px; }
     .carousel-wrap { position:relative; overflow:hidden; }
     .carousel-wrap::before, .carousel-wrap::after { content:''; position:absolute; top:0; height:100%; width:160px; z-index:2; pointer-events:none; }
@@ -378,8 +378,8 @@
     .logo-tile:hover { transform:translateY(-8px) scale(1.04); }
     .logo-tile img { max-width:100%; max-height:52px; object-fit:contain; }
 
-    .site-footer { padding:100px 6% 52px; }
-    .footer-grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:64px; }
+    .site-footer { padding:80px 6% 40px; }
+    .footer-grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; }
     .footer-logo { height:52px; margin-bottom:22px; }
     .footer-desc { color:var(--muted); font-size:15px; line-height:1.75; max-width:260px; }
     .footer-col h6 { font-family:var(--font-h); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:28px; }
