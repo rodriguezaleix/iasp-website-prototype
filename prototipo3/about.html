@@ -180,15 +180,15 @@
         color: var(--off); padding: 60px 0 40px; position: relative; z-index: 10;
     }
     .mission-header { text-align: center; margin-bottom: 100px; padding: 0 6%; }
-    .mission-header h2 { font-family: var(--font-h); font-size: clamp(3rem, 6vw, 6rem); font-weight: 900; letter-spacing: -3px; color: var(--off); line-height: 0.9; }
+    .mission-header h2 { font-family: var(--font-h); font-size: clamp(2rem, 4vw, 4rem); font-weight: 900; letter-spacing: -2px; color: var(--off); line-height: 0.9; }
     
     .stack-container { position: relative; max-width: 1100px; margin: 0 auto; padding: 0 6%; }
     .stack-card {
-        position: sticky; height: 60vh; min-height: 480px;
+        position: sticky; height: 45vh; min-height: 360px;
         background: rgba(255,255,255,0.7); backdrop-filter: blur(40px);
-        border: 1px solid rgba(255,255,255,0.8); border-radius: 40px; padding: 60px 80px; margin-bottom: 80px;
+        border: 1px solid rgba(255,255,255,0.8); border-radius: 32px; padding: 40px 60px; margin-bottom: 60px;
         box-shadow: 0 30px 60px rgba(0,0,0,0.03), 0 0 0 1px rgba(0,0,0,0.02) inset;
-        display: flex; align-items: center; justify-content: space-between; gap: 60px;
+        display: flex; align-items: center; justify-content: space-between; gap: 40px;
         transition: transform 0.1s linear; transform-origin: top center; will-change: transform;
         overflow: hidden;
     }
@@ -211,9 +211,9 @@
     .stack-card:nth-child(3) { top: 180px; z-index: 3; margin-bottom: 0; }
 
     .sc-content { position: relative; z-index: 1; width: 100%; }
-    .sc-title { font-family: var(--font-h); font-size: 3.5rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 30px; color: var(--off); }
-    .sc-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-    .sc-list li { display: flex; align-items: center; gap: 24px; font-size: 1.25rem; line-height: 1.4; color: rgba(0,0,0,0.75); font-weight: 500; background: rgba(255,255,255,0.7); padding: 20px 30px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 10px 20px rgba(0,0,0,0.01); }
+    .sc-title { font-family: var(--font-h); font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; color: var(--off); }
+    .sc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .sc-list li { display: flex; align-items: center; gap: 16px; font-size: 1.1rem; line-height: 1.4; color: rgba(0,0,0,0.75); font-weight: 500; background: rgba(255,255,255,0.7); padding: 16px 24px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 10px 20px rgba(0,0,0,0.01); }
     .sc-list li i { font-size: 32px; color: var(--cyan); flex-shrink: 0; }
     .card-2 .sc-list li i { color: var(--lime); }
     .card-3 .sc-list li i { color: var(--off); }
@@ -224,15 +224,15 @@
     ──────────────────────────────────────────── */
     .numbers-wrap { background: var(--grey); padding: 60px 6% 40px; position:relative; z-index:5; }
     .n-header { text-align: center; margin-bottom: 100px; max-width: 800px; margin-left: auto; margin-right: auto; }
-    .n-header h2 { font-family: var(--font-h); font-size: clamp(3rem, 5vw, 5rem); font-weight: 900; letter-spacing: -2px; color: var(--off); }
-    .n-header p { font-size: 1.25rem; color: var(--muted); margin-top: 20px; }
+    .n-header h2 { font-family: var(--font-h); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; letter-spacing: -1.5px; color: var(--off); }
+    .n-header p { font-size: 1.15rem; color: var(--muted); margin-top: 16px; }
 
     .vibrant-grid {
-        display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(340px, auto); gap: 32px;
+        display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(240px, auto); gap: 20px;
         max-width: 1400px; margin: 0 auto;
     }
     .m-item {
-        border-radius: 40px; padding: 48px; display: flex; flex-direction: column; justify-content: space-between;
+        border-radius: 32px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between;
         position: relative; overflow: hidden;
         box-shadow: 0 30px 60px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.4) inset;
         transition: transform 0.5s var(--easing), box-shadow 0.5s var(--easing);
@@ -269,8 +269,8 @@
     
     /* Premium Numbers */
     .m-num {
-        position:relative; z-index:1; font-family: var(--font-h); font-weight: 900; line-height: 0.8; letter-spacing: -4px;
-        font-size: clamp(4rem, 8vw, 10rem); align-self: flex-end; margin-top: 40px;
+        position:relative; z-index:1; font-family: var(--font-h); font-weight: 900; line-height: 0.8; letter-spacing: -2px;
+        font-size: clamp(3rem, 5vw, 6rem); align-self: flex-end; margin-top: 24px;
     }
     .m-cyan .m-num  { color: #fff; text-shadow: 0 20px 40px rgba(0,0,0,0.2); }
     .m-lime .m-num  { color: #fff; text-shadow: 0 20px 40px rgba(0,0,0,0.15); }
@@ -282,10 +282,10 @@
     ──────────────────────────────────────────── */
     .org-wrap { padding: 40px 6% 60px; background: var(--grey); color: var(--off); }
     .o-header { text-align: center; margin-bottom: 80px; }
-    .o-header h2 { font-family: var(--font-h); font-size: clamp(3rem, 5vw, 5rem); font-weight: 900; letter-spacing: -2px; }
+    .o-header h2 { font-family: var(--font-h); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; letter-spacing: -1.5px; }
 
     .liquid-accordion {
-        display: flex; width: 100%; max-width: 1400px; height: 400px; margin: 0 auto; gap: 12px;
+        display: flex; width: 100%; max-width: 1400px; height: 300px; margin: 0 auto; gap: 12px;
     }
     .l-item {
         flex: 1; position: relative; border-radius: 32px; overflow: hidden; cursor: pointer;
@@ -316,7 +316,7 @@
 
     .l-details { opacity: 0; transform: translateY(20px); transition: all 0.5s 0.2s; color: #fff; }
     .l-item:hover .l-details { opacity: 1; transform: translateY(0); }
-    .l-details h3 { font-family: var(--font-h); font-size: 2.5rem; font-weight: 900; margin-bottom: 16px; letter-spacing: -1px; }
+    .l-details h3 { font-family: var(--font-h); font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; letter-spacing: -0.5px; }
     .l-details p { font-size: 1.1rem; max-width: 400px; line-height: 1.6; color: rgba(255,255,255,0.9); }
 
 
@@ -324,10 +324,10 @@
        THE IASP FOREST (Premium Banner)
     ──────────────────────────────────────────── */
     .forest-wrap {
-        position: relative; padding: 80px 6%;
+        position: relative; padding: 60px 6%;
         background: url('about-tree.jpg') center/cover fixed;
         display: flex; align-items: center; justify-content: center;
-        min-height: 450px; text-align: center;
+        min-height: 300px; text-align: center;
     }
     .forest-wrap::before {
         content: ''; position: absolute; inset: 0;
@@ -344,8 +344,8 @@
         display: flex; flex-direction: column; align-items: center;
     }
     .forest-card h2 {
-        font-family: var(--font-h); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900;
-        line-height: 0.9; letter-spacing: -2px; margin-bottom: 24px; color: var(--lime);
+        font-family: var(--font-h); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900;
+        line-height: 0.9; letter-spacing: -1px; margin-bottom: 16px; color: var(--lime);
     }
     .forest-card p {
         font-size: 1.15rem; line-height: 1.6; margin-bottom: 24px; color: rgba(255,255,255,0.85); font-weight: 500;
